@@ -74,7 +74,11 @@ export async function loginUserWithFirebase(
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
-      return docSnap.data() as UserProfile;
+      const data = docSnap.data() as UserProfile;
+      // Migration: Map old plans to new ones
+      if (data.plan === 'pro') data.plan = 'beta';
+      if (data.plan === 'premium') data.plan = 'alfa';
+      return data;
     } else {
       // Criar documento se não existir
       const defaultProfile: UserProfile = {
@@ -138,7 +142,11 @@ export async function getUserProfileFromFirestore(userId: string): Promise<UserP
   try {
     const docSnap = await getDoc(doc(db, 'users', userId));
     if (docSnap.exists()) {
-      return docSnap.data() as UserProfile;
+      const data = docSnap.data() as UserProfile;
+      // Migration: Map old plans to new ones
+      if (data.plan === 'pro') data.plan = 'beta';
+      if (data.plan === 'premium') data.plan = 'alfa';
+      return data;
     }
   } catch (e) {
     console.warn('Firestore get user error:', e);

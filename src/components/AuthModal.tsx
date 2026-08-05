@@ -326,25 +326,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSelectedPlan('pro')}
+                  onClick={() => setSelectedPlan('beta')}
                   className={`py-2 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    selectedPlan === 'pro'
+                    selectedPlan === 'beta'
                       ? 'bg-amber-100 border-amber-400 text-amber-900 shadow-2xs'
                       : 'bg-white border-gray-200 text-gray-500'
                   }`}
                 >
-                  Pro (R$19,90)
+                  Beta (R$19,90)
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSelectedPlan('premium')}
+                  onClick={() => setSelectedPlan('alfa')}
                   className={`py-2 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    selectedPlan === 'premium'
+                    selectedPlan === 'alfa'
                       ? 'bg-emerald-100 border-emerald-400 text-emerald-900 shadow-2xs'
                       : 'bg-white border-gray-200 text-gray-500'
                   }`}
                 >
-                  Premium (R$49,90)
+                  Alfa (R$49,90)
                 </button>
               </div>
             </div>
