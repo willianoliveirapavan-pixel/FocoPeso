@@ -107,33 +107,33 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
       {/* Main KPI Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* KPI 1: Peso & Progresso Meta */}
-        <div className="p-6 rounded-3xl bg-white border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+            <span className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
               Peso Atual
             </span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
               <Target className="w-5 h-5" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-3xl font-extrabold text-gray-900">
+            <span className="text-3xl font-extrabold text-gray-900 dark:text-white">
               {user.currentWeight}
             </span>
-            <span className="text-sm text-gray-500 font-semibold">kg</span>
+            <span className="text-sm text-gray-500 dark:text-slate-400 font-semibold">kg</span>
           </div>
-          <p className="text-xs text-gray-500 mb-3">
-            Meta: <strong className="text-gray-900">{user.targetWeight} kg</strong>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mb-3">
+            Meta: <strong className="text-gray-900 dark:text-white">{user.targetWeight} kg</strong>
           </p>
 
           {/* Progress Bar */}
-          <div className="w-full bg-gray-100 rounded-full h-2.5 mb-2 overflow-hidden">
+          <div className="w-full bg-gray-100 dark:bg-slate-800 rounded-full h-2.5 mb-2 overflow-hidden">
             <div
               className="bg-emerald-500 h-2.5 rounded-full transition-all duration-500"
               style={{ width: `${progressPct}%` }}
             />
           </div>
-          <p className="text-[11px] font-bold text-emerald-700">
+          <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
             {Number(weightDiff) === 0
               ? '🎉 Meta Atingida!'
               : `Você está a ${weightDiff} kg da sua meta!`}
@@ -141,66 +141,66 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
         </div>
 
         {/* KPI 2: TMB (Metabolismo Basal) */}
-        <div className="p-6 rounded-3xl bg-white border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+            <span className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
               TMB (Basal)
             </span>
-            <div className="w-9 h-9 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-orange-50 dark:bg-orange-950 text-orange-500 dark:text-orange-400 flex items-center justify-center">
               <Flame className="w-5 h-5" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-3xl font-extrabold text-gray-900">
+            <span className="text-3xl font-extrabold text-gray-900 dark:text-white">
               {macros.tmb}
             </span>
-            <span className="text-sm text-gray-500 font-semibold">kcal/dia</span>
+            <span className="text-sm text-gray-500 dark:text-slate-400 font-semibold">kcal/dia</span>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-slate-400">
             Gasto do organismo em repouso absoluto.
           </p>
         </div>
 
         {/* KPI 3: TDEE (Gasto Total Diário) */}
-        <div className="p-6 rounded-3xl bg-white border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+            <span className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
               Gasto Total (TDEE)
             </span>
-            <div className="w-9 h-9 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center">
               <TrendingUp className="w-5 h-5" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-3xl font-extrabold text-gray-900">
+            <span className="text-3xl font-extrabold text-gray-900 dark:text-white">
               {macros.tdee}
             </span>
-            <span className="text-sm text-gray-500 font-semibold">kcal/dia</span>
+            <span className="text-sm text-gray-500 dark:text-slate-400 font-semibold">kcal/dia</span>
           </div>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-slate-400">
             Considerando seu nível de atividade.
           </p>
         </div>
 
         {/* KPI 4: IMC Status */}
-        <div className="p-6 rounded-3xl bg-white border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+            <span className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
               Índice IMC
             </span>
-            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center">
               <Activity className="w-5 h-5" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-3xl font-extrabold text-gray-900">
+            <span className="text-3xl font-extrabold text-gray-900 dark:text-white">
               {bmiInfo.bmi}
             </span>
             <span className="text-xs px-2.5 py-1 rounded-full font-bold border ${bmiInfo.color}">
               {bmiInfo.category}
             </span>
           </div>
-          <p className="text-xs text-gray-500 truncate" title={bmiInfo.advice}>
+          <p className="text-xs text-gray-500 dark:text-slate-400 truncate" title={bmiInfo.advice}>
             {bmiInfo.advice}
           </p>
         </div>
@@ -209,48 +209,48 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
       {/* Target Calorie Summary & Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Calorie Goal Details */}
-        <div className="lg:col-span-2 p-6 sm:p-8 rounded-3xl bg-white border border-gray-100 shadow-xs">
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+        <div className="lg:col-span-2 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xs">
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100 dark:border-slate-800">
             <div>
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                 Meta Calórica Diária Recomendada
               </h3>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-slate-400">
                 Calculada cientificamente para atingir seu objetivo.
               </p>
             </div>
-            <span className="text-2xl font-black text-emerald-600">
-              {macros.targetCalories} <span className="text-xs font-bold text-gray-500">kcal</span>
+            <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">
+              {macros.targetCalories} <span className="text-xs font-bold text-gray-500 dark:text-slate-400">kcal</span>
             </span>
           </div>
 
           <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100">
-              <p className="text-xs text-gray-500 mb-1 font-semibold">Gasto Basal (TMB)</p>
-              <p className="text-lg font-bold text-gray-800">{macros.tmb} kcal</p>
+            <div className="p-4 rounded-2xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700">
+              <p className="text-xs text-gray-500 dark:text-slate-400 mb-1 font-semibold">Gasto Basal (TMB)</p>
+              <p className="text-lg font-bold text-gray-800 dark:text-slate-200">{macros.tmb} kcal</p>
             </div>
-            <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100">
-              <p className="text-xs text-gray-500 mb-1 font-semibold">Ajuste de Meta</p>
-              <p className={`text-lg font-bold ${macros.deficitOrSurplus < 0 ? 'text-amber-600' : 'text-emerald-600'}`}>
+            <div className="p-4 rounded-2xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700">
+              <p className="text-xs text-gray-500 dark:text-slate-400 mb-1 font-semibold">Ajuste de Meta</p>
+              <p className={`text-lg font-bold ${macros.deficitOrSurplus < 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                 {macros.deficitOrSurplus > 0 ? `+${macros.deficitOrSurplus}` : macros.deficitOrSurplus} kcal
               </p>
             </div>
-            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
-              <p className="text-xs text-emerald-700 mb-1 font-bold">Consumo Alvo</p>
-              <p className="text-lg font-black text-emerald-800">{macros.targetCalories} kcal</p>
+            <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900">
+              <p className="text-xs text-emerald-700 dark:text-emerald-300 mb-1 font-bold">Consumo Alvo</p>
+              <p className="text-lg font-black text-emerald-800 dark:text-emerald-200">{macros.targetCalories} kcal</p>
             </div>
           </div>
 
           {/* Macro breakdown hint */}
-          <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs">
-            <span className="text-gray-500">
+          <div className="mt-6 pt-4 border-t border-gray-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <span className="text-gray-500 dark:text-slate-400">
               {user.plan === 'free'
                 ? '🔒 Divisão exata de Proteínas, Carboidratos e Gorduras requer Plano Pro.'
                 : '✅ Divisão de Macronutrientes liberada no seu plano.'}
             </span>
             <button
               onClick={() => onSelectTab('calculator')}
-              className="font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 cursor-pointer"
+              className="font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 flex items-center gap-1 cursor-pointer"
             >
               Ver Detalhes <ArrowRight className="w-3.5 h-3.5" />
             </button>

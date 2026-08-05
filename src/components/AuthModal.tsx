@@ -140,24 +140,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-gray-100 relative my-8">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-slate-800 text-gray-800 dark:text-slate-100 relative my-8 transition-colors">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-2 text-gray-400 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
         <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-3">
             <Activity className="w-7 h-7" />
           </div>
-          <h2 className="text-2xl font-extrabold text-gray-900">
-            {mode === 'login' ? 'Acessar NutriCalc Pro' : 'Criar sua Conta'}
+          <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">
+            {mode === 'login' ? 'Acessar FocoPeso' : 'Criar sua Conta'}
           </h2>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
             {mode === 'login'
               ? 'Digite suas credenciais para ver seu perfil e metas.'
               : 'Preencha seus dados para calcular TMB e simular seu plano.'}
@@ -165,7 +165,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex rounded-xl bg-gray-100 p-1 mb-6">
+        <div className="flex rounded-xl bg-gray-100 dark:bg-slate-800 p-1 mb-6">
           <button
             type="button"
             onClick={() => {
@@ -174,8 +174,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             }}
             className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               mode === 'login'
-                ? 'bg-white text-gray-900 shadow-xs'
-                : 'text-gray-500 hover:text-gray-800'
+                ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-xs'
+                : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-white'
             }`}
           >
             Fazer Login
@@ -188,8 +188,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             }}
             className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               mode === 'register'
-                ? 'bg-white text-gray-900 shadow-xs'
-                : 'text-gray-500 hover:text-gray-800'
+                ? 'bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-xs'
+                : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-white'
             }`}
           >
             Criar Nova Conta

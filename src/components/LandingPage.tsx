@@ -58,26 +58,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 via-white to-gray-50 text-gray-800">
+    <div className="bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-gray-800 dark:text-slate-100 transition-colors">
       {/* HERO SECTION */}
       <section id="hero" className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
         {/* Background glow decorations */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-emerald-300/20 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-emerald-300/20 dark:bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Copy Column */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold shadow-2xs">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-semibold shadow-2xs">
+                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>Nutrição Baseada em Ciência & Resultados Reais</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.15]">
-                Conquiste seu <span className="text-emerald-600 underline decoration-emerald-200 decoration-wavy">corpo ideal</span> com cálculo exato de TMB e Macros.
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white tracking-tight leading-[1.15]">
+                Conquiste seu <span className="text-emerald-600 dark:text-emerald-400 underline decoration-emerald-200 dark:decoration-emerald-800 decoration-wavy">corpo ideal</span> com cálculo exato de TMB e Macros.
               </h1>
 
-              <p className="text-lg sm:text-xl text-gray-600 max-w-2xl leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-600 dark:text-slate-300 max-w-2xl leading-relaxed">
                 Descubra quantas calorias seu corpo queima por dia, receba a divisão perfeita de proteínas, carboidratos e gorduras e acompanhe sua meta sem passar fome.
               </p>
 
@@ -96,14 +96,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
                 <button
                   onClick={() => onOpenAuth('login')}
                   id="hero-cta-login"
-                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 font-bold text-base shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-100 border border-gray-200 dark:border-slate-700 font-bold text-base shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   Fazer Login
                 </button>
               </div>
 
               {/* Trust badges */}
-              <div className="pt-4 flex items-center justify-center lg:justify-start gap-6 text-xs text-gray-500 font-medium">
+              <div className="pt-4 flex items-center justify-center lg:justify-start gap-6 text-xs text-gray-500 dark:text-slate-400 font-medium">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                   Sem cartão no cadastro
@@ -121,22 +121,22 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
 
             {/* Right Interactive Micro-Calculator Card */}
             <div className="lg:col-span-5">
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100 relative">
-                <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-6">
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100 dark:border-slate-800 relative">
+                <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-slate-800 mb-6">
                   <div className="flex items-center gap-2">
                     <Flame className="w-5 h-5 text-orange-500 animate-pulse" />
-                    <h3 className="font-bold text-gray-900 text-base">
+                    <h3 className="font-bold text-gray-900 dark:text-white text-base">
                       Simulador Rápido de TMB
                     </h3>
                   </div>
-                  <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full">
+                  <span className="text-xs bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold px-2.5 py-1 rounded-full border border-emerald-200/50 dark:border-emerald-800/50">
                     Teste Grátis
                   </span>
                 </div>
 
                 <form onSubmit={handleHeroCalc} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1">
+                    <label className="block text-xs font-semibold text-gray-600 dark:text-slate-300 mb-1">
                       Gênero
                     </label>
                     <div className="grid grid-cols-2 gap-2">
@@ -145,8 +145,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
                         onClick={() => setHeroGender('masculino')}
                         className={`py-2 rounded-xl text-xs font-bold border cursor-pointer transition-all ${
                           heroGender === 'masculino'
-                            ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
-                            : 'bg-gray-50 border-gray-200 text-gray-600'
+                            ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 text-emerald-700 dark:text-emerald-300'
+                            : 'bg-gray-50 dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300'
                         }`}
                       >
                         Homem
@@ -156,8 +156,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
                         onClick={() => setHeroGender('feminino')}
                         className={`py-2 rounded-xl text-xs font-bold border cursor-pointer transition-all ${
                           heroGender === 'feminino'
-                            ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
-                            : 'bg-gray-50 border-gray-200 text-gray-600'
+                            ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-500 text-emerald-700 dark:text-emerald-300'
+                            : 'bg-gray-50 dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300'
                         }`}
                       >
                         Mulher
@@ -167,40 +167,40 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
 
                   <div className="grid grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1">
+                      <label className="block text-xs font-semibold text-gray-600 dark:text-slate-300 mb-1">
                         Peso (kg)
                       </label>
                       <input
                         type="number"
                         value={heroWeight}
                         onChange={(e) => setHeroWeight(Number(e.target.value))}
-                        className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+                        className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                         min="30"
                         max="250"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1">
+                      <label className="block text-xs font-semibold text-gray-600 dark:text-slate-300 mb-1">
                         Altura (cm)
                       </label>
                       <input
                         type="number"
                         value={heroHeight}
                         onChange={(e) => setHeroHeight(Number(e.target.value))}
-                        className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+                        className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                         min="100"
                         max="230"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-600 mb-1">
+                      <label className="block text-xs font-semibold text-gray-600 dark:text-slate-300 mb-1">
                         Idade (anos)
                       </label>
                       <input
                         type="number"
                         value={heroAge}
                         onChange={(e) => setHeroAge(Number(e.target.value))}
-                        className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+                        className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                         min="10"
                         max="100"
                       />
@@ -210,26 +210,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
                   <button
                     type="submit"
                     id="hero-calc-btn"
-                    className="w-full py-3 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                    className="w-full py-3 rounded-xl bg-gray-900 dark:bg-emerald-600 dark:hover:bg-emerald-700 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
                   >
                     Calcular minha TMB Agora
                   </button>
                 </form>
 
                 {heroResult !== null && (
-                  <div className="mt-5 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 animate-in fade-in duration-300">
-                    <p className="text-xs text-emerald-800 font-semibold mb-1">
+                  <div className="mt-5 p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 animate-in fade-in duration-300">
+                    <p className="text-xs text-emerald-800 dark:text-emerald-300 font-semibold mb-1">
                       Sua Taxa Metabólica Basal Estimada:
                     </p>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-extrabold text-emerald-700">
+                      <span className="text-3xl font-extrabold text-emerald-700 dark:text-emerald-400">
                         {heroResult}
                       </span>
-                      <span className="text-sm font-semibold text-emerald-600">
+                      <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-300">
                         kcal / dia
                       </span>
                     </div>
-                    <p className="text-[11px] text-emerald-600 mt-2">
+                    <p className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-2">
                       💡 Esse é o mínimo que seu corpo queima apenas para se manter vivo. Cadastre-se para ver seu gasto total diário e divisão de macros!
                     </p>
                   </div>
@@ -241,50 +241,50 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
       </section>
 
       {/* RECURSOS / FEATURES */}
-      <section id="recursos" className="py-16 bg-white border-y border-gray-100">
+      <section id="recursos" className="py-16 bg-white dark:bg-slate-900 border-y border-gray-100 dark:border-slate-800 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest mb-2">
+            <h2 className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-2">
               Recursos de Alto Desempenho
             </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+            <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
               Tudo o que você precisa para controlar sua dieta sem achismos.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-6">
+            <div className="p-8 rounded-3xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-800 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mb-6">
                 <Flame className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 Cálculo Científico TMB & TDEE
               </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
                 Descubra com precisão matemática quantas calorias seu corpo gasta em repouso e em atividade diária com fórmulas oficiais.
               </p>
             </div>
 
-            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mb-6">
+            <div className="p-8 rounded-3xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-800 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center mb-6">
                 <TrendingUp className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 Divisão Personalizada de Macros
               </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
                 Proteínas para preservar massa magra, carboidratos para energia e gorduras boas para regulação hormonal na medida ideal.
               </p>
             </div>
 
-            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center mb-6">
+            <div className="p-8 rounded-3xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-800 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 rounded-2xl bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 flex items-center justify-center mb-6">
                 <Utensils className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 Sugestão de Cardápio Adaptativo
               </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
                 Refeições divididas ao longo do dia ajustadas exatamente às suas calorias alvo com alimentos populares do Brasil.
               </p>
             </div>
@@ -292,17 +292,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
         </div>
       </section>
 
-      {/* PRICING TABLE (Exigência Principal 2) */}
+      {/* PRICING TABLE */}
       <section id="precos" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest mb-2">
+            <h2 className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-2">
               Planos Transparentes
             </h2>
-            <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+            <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-4">
               Escolha o plano ideal para a sua transformação
             </p>
-            <p className="text-base text-gray-600">
+            <p className="text-base text-gray-600 dark:text-slate-300">
               Sem contratos de fidelidade. Mude ou cancele seu plano a qualquer momento.
             </p>
           </div>
@@ -310,24 +310,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
           {/* Pricing Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
             {/* PLANO GRÁTIS */}
-            <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm flex flex-col justify-between hover:border-gray-300 transition-all">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-gray-200 dark:border-slate-800 shadow-sm flex flex-col justify-between hover:border-gray-300 dark:hover:border-slate-700 transition-all">
               <div>
-                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700 mb-4">
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 mb-4">
                   Básico
                 </div>
-                <h3 className="text-2xl font-extrabold text-gray-900 mb-1">
+                <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-1">
                   Plano Grátis
                 </h3>
-                <p className="text-xs text-gray-500 mb-6">
+                <p className="text-xs text-gray-500 dark:text-slate-400 mb-6">
                   Ideal para conhecer a plataforma e calcular sua TMB.
                 </p>
 
                 <div className="mb-8">
-                  <span className="text-4xl font-extrabold text-gray-900">R$ 0</span>
-                  <span className="text-gray-500 text-sm font-medium"> /mês</span>
+                  <span className="text-4xl font-extrabold text-gray-900 dark:text-white">R$ 0</span>
+                  <span className="text-gray-500 dark:text-slate-400 text-sm font-medium"> /mês</span>
                 </div>
 
-                <ul className="space-y-4 text-sm text-gray-600 mb-8">
+                <ul className="space-y-4 text-sm text-gray-600 dark:text-slate-300 mb-8">
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
                     <span>Cadastro de Perfil básico</span>
@@ -340,16 +340,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
                     <span>Cálculo de TDEE (Gasto Diário)</span>
                   </li>
-                  <li className="flex items-center gap-3 text-gray-400">
-                    <Lock className="w-4 h-4 text-gray-300 shrink-0" />
+                  <li className="flex items-center gap-3 text-gray-400 dark:text-slate-500">
+                    <Lock className="w-4 h-4 text-gray-300 dark:text-slate-600 shrink-0" />
                     <span className="line-through">Divisão de Macronutrientes</span>
                   </li>
-                  <li className="flex items-center gap-3 text-gray-400">
-                    <Lock className="w-4 h-4 text-gray-300 shrink-0" />
+                  <li className="flex items-center gap-3 text-gray-400 dark:text-slate-500">
+                    <Lock className="w-4 h-4 text-gray-300 dark:text-slate-600 shrink-0" />
                     <span className="line-through">Gráficos de Progresso e Metas</span>
                   </li>
-                  <li className="flex items-center gap-3 text-gray-400">
-                    <Lock className="w-4 h-4 text-gray-300 shrink-0" />
+                  <li className="flex items-center gap-3 text-gray-400 dark:text-slate-500">
+                    <Lock className="w-4 h-4 text-gray-300 dark:text-slate-600 shrink-0" />
                     <span className="line-through">Sugestão de Cardápio</span>
                   </li>
                 </ul>
@@ -358,43 +358,43 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
               <button
                 onClick={() => onOpenAuth('register', 'free')}
                 id="plan-free-btn"
-                className="w-full py-3.5 rounded-xl border border-gray-300 hover:bg-gray-50 text-gray-800 font-bold text-sm transition-colors cursor-pointer"
+                className="w-full py-3.5 rounded-xl border border-gray-300 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-800 dark:text-slate-200 font-bold text-sm transition-colors cursor-pointer"
               >
                 Criar Conta Grátis
               </button>
             </div>
 
             {/* PLANO PRO (Destaque) */}
-            <div className="bg-white rounded-3xl p-8 border-2 border-amber-500 shadow-xl relative flex flex-col justify-between transform lg:-translate-y-3">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border-2 border-amber-500 dark:border-amber-500/80 shadow-xl relative flex flex-col justify-between transform lg:-translate-y-3">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full shadow-md">
                 Mais Popular
               </div>
 
               <div>
-                <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 mb-4 mt-2">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 mb-4 mt-2">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   Performance Completa
                 </div>
-                <h3 className="text-2xl font-extrabold text-gray-900 mb-1">
+                <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-1">
                   Plano Pro
                 </h3>
-                <p className="text-xs text-gray-500 mb-6">
+                <p className="text-xs text-gray-500 dark:text-slate-400 mb-6">
                   Para quem deseja saber exatamente o quanto comer para atingir resultados.
                 </p>
 
                 <div className="mb-8">
-                  <span className="text-4xl font-extrabold text-gray-900">R$ 19,90</span>
-                  <span className="text-gray-500 text-sm font-medium"> /mês</span>
+                  <span className="text-4xl font-extrabold text-gray-900 dark:text-white">R$ 19,90</span>
+                  <span className="text-gray-500 dark:text-slate-400 text-sm font-medium"> /mês</span>
                 </div>
 
-                <ul className="space-y-4 text-sm text-gray-600 mb-8">
+                <ul className="space-y-4 text-sm text-gray-600 dark:text-slate-300 mb-8">
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                    <span className="font-semibold text-gray-900">Tudo do Plano Grátis</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">Tudo do Plano Grátis</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                    <span className="font-semibold text-gray-900">Divisão exata de Macros (g/dia)</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">Divisão exata de Macros (g/dia)</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
@@ -408,8 +408,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
                     <span>Diário Alimentar Interativo</span>
                   </li>
-                  <li className="flex items-center gap-3 text-gray-400">
-                    <Lock className="w-4 h-4 text-gray-300 shrink-0" />
+                  <li className="flex items-center gap-3 text-gray-400 dark:text-slate-500">
+                    <Lock className="w-4 h-4 text-gray-300 dark:text-slate-600 shrink-0" />
                     <span className="line-through">Sugestão de Cardápio Diário</span>
                   </li>
                 </ul>
@@ -426,32 +426,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
             </div>
 
             {/* PLANO PREMIUM */}
-            <div className="bg-white rounded-3xl p-8 border border-emerald-200 shadow-sm flex flex-col justify-between hover:border-emerald-300 transition-all">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-emerald-200 dark:border-emerald-800 shadow-sm flex flex-col justify-between hover:border-emerald-300 dark:hover:border-emerald-700 transition-all">
               <div>
-                <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 mb-4">
-                  <Zap className="w-3.5 h-3.5 text-emerald-600" />
+                <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mb-4">
+                  <Zap className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   Experiência VIP
                 </div>
-                <h3 className="text-2xl font-extrabold text-gray-900 mb-1">
+                <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-1">
                   Plano Premium
                 </h3>
-                <p className="text-xs text-gray-500 mb-6">
+                <p className="text-xs text-gray-500 dark:text-slate-400 mb-6">
                   Suporte completo com planejamento de refeições e assistente IA.
                 </p>
 
                 <div className="mb-8">
-                  <span className="text-4xl font-extrabold text-gray-900">R$ 49,90</span>
-                  <span className="text-gray-500 text-sm font-medium"> /mês</span>
+                  <span className="text-4xl font-extrabold text-gray-900 dark:text-white">R$ 49,90</span>
+                  <span className="text-gray-500 dark:text-slate-400 text-sm font-medium"> /mês</span>
                 </div>
 
-                <ul className="space-y-4 text-sm text-gray-600 mb-8">
+                <ul className="space-y-4 text-sm text-gray-600 dark:text-slate-300 mb-8">
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                    <span className="font-semibold text-gray-900">Tudo do Plano Pro</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">Tudo do Plano Pro</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                    <span className="font-semibold text-emerald-700">Sugestão de Cardápio Completo</span>
+                    <span className="font-semibold text-emerald-700 dark:text-emerald-400">Sugestão de Cardápio Completo</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
@@ -481,74 +481,74 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
       </section>
 
       {/* TESTIMONIALS */}
-      <section id="depoimentos" className="py-16 bg-white border-t border-gray-100">
+      <section id="depoimentos" className="py-16 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest mb-2">
+            <h2 className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-2">
               Histórias de Sucesso
             </h2>
-            <p className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            <p className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
               Quem usa o FocoPeso aprova a transformação
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <div className="p-6 rounded-2xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700">
               <div className="flex gap-1 text-amber-400 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400" />
                 ))}
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed mb-4">
+              <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
                 "Consegui perder 7kg em 2 meses entendendo finalmente a minha TMB e comendo a quantidade certa de proteínas sem radicalismos!"
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-sm">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold flex items-center justify-center text-sm">
                   MC
                 </div>
                 <div>
-                  <p className="font-bold text-sm text-gray-900">Mariana Costa</p>
-                  <p className="text-xs text-gray-400">Plano Pro • Perdeu 7 kg</p>
+                  <p className="font-bold text-sm text-gray-900 dark:text-white">Mariana Costa</p>
+                  <p className="text-xs text-gray-400 dark:text-slate-400">Plano Pro • Perdeu 7 kg</p>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <div className="p-6 rounded-2xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700">
               <div className="flex gap-1 text-amber-400 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400" />
                 ))}
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed mb-4">
+              <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
                 "A divisão de macros do FocoPeso mudou meu treino. Ganhei massa magra sem acumular gordura abdominal. Ferramenta indispensável!"
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-teal-100 text-teal-800 font-bold flex items-center justify-center text-sm">
+                <div className="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 font-bold flex items-center justify-center text-sm">
                   RS
                 </div>
                 <div>
-                  <p className="font-bold text-sm text-gray-900">Rodrigo Santos</p>
-                  <p className="text-xs text-gray-400">Plano Premium • Ganho de Massa</p>
+                  <p className="font-bold text-sm text-gray-900 dark:text-white">Rodrigo Santos</p>
+                  <p className="text-xs text-gray-400 dark:text-slate-400">Plano Premium • Ganho de Massa</p>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <div className="p-6 rounded-2xl bg-gray-50 dark:bg-slate-800/80 border border-gray-100 dark:border-slate-700">
               <div className="flex gap-1 text-amber-400 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400" />
                 ))}
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed mb-4">
+              <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
                 "Super simples de usar no celular. A sugestão de cardápio facilitou muito minha rotina corrida no trabalho."
               </p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-sm">
+                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold flex items-center justify-center text-sm">
                   FA
                 </div>
                 <div>
-                  <p className="font-bold text-sm text-gray-900">Fernanda Almeida</p>
-                  <p className="text-xs text-gray-400">Plano Pro • Manutenção</p>
+                  <p className="font-bold text-sm text-gray-900 dark:text-white">Fernanda Almeida</p>
+                  <p className="text-xs text-gray-400 dark:text-slate-400">Plano Pro • Manutenção</p>
                 </div>
               </div>
             </div>
@@ -557,10 +557,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-slate-950 transition-colors">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-extrabold text-gray-900">
+            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">
               Perguntas Frequentes
             </h2>
           </div>
@@ -569,24 +569,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
             {faqs.map((faq, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl border border-gray-200 overflow-hidden"
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 overflow-hidden"
               >
                 <button
                   onClick={() => setFaqOpen(faqOpen === idx ? null : idx)}
-                  className="w-full text-left p-5 flex items-center justify-between font-bold text-gray-900 text-sm cursor-pointer"
+                  className="w-full text-left p-5 flex items-center justify-between font-bold text-gray-900 dark:text-white text-sm cursor-pointer"
                 >
                   <span className="flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-emerald-600" />
+                    <HelpCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform ${
-                      faqOpen === idx ? 'rotate-180 text-emerald-600' : ''
+                    className={`w-5 h-5 text-gray-400 dark:text-slate-500 transition-transform ${
+                      faqOpen === idx ? 'rotate-180 text-emerald-600 dark:text-emerald-400' : ''
                     }`}
                   />
                 </button>
                 {faqOpen === idx && (
-                  <div className="px-5 pb-5 text-sm text-gray-600 border-t border-gray-100 pt-3">
+                  <div className="px-5 pb-5 text-sm text-gray-600 dark:text-slate-300 border-t border-gray-100 dark:border-slate-800 pt-3">
                     {faq.a}
                   </div>
                 )}
