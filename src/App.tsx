@@ -15,7 +15,7 @@ import {
   updateUserPlan,
   clearStorage,
 } from './utils/storage';
-import { logoutFirebase } from './services/firebaseService';
+import { logoutFirebase, getUserProfileFromFirestore } from './services/firebaseService';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { LandingPage } from './components/LandingPage';
@@ -72,6 +72,19 @@ export default function App() {
     localStorage.setItem('focopeso_dark_mode', darkMode ? 'true' : 'false');
   }, [darkMode]);
 
+  useEffect(() => {
+    if (isAuth && user) {
+      getUserProfileFromFirestore(user.id).then((updatedUser) => {
+        if (updatedUser) {
+          setUser(updatedUser);
+          saveUser(updatedUser);
+        }
+      });
+    }
+  }, [activeTab]);
+
+
+
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
   };
@@ -108,7 +121,15 @@ export default function App() {
   };
 
   const handleOpenPlansModal = () => {
-    setPlansModalOpen(true);
+    if (!user) return;
+    
+    if (user.plan === 'free') {
+      window.location.href = 'https://buy.stripe.com/28E5kFffq1yP9ZteUc3Ru00'; // Beta
+    } else if (user.plan === 'beta') {
+      window.location.href = 'https://buy.stripe.com/6oUeVf4AM6T9gnReUc3Ru01'; // Alfa
+    } else {
+      setPlansModalOpen(true);
+    }
   };
 
   return (
