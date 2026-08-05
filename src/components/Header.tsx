@@ -10,6 +10,8 @@ import {
   ChevronDown,
   Lock,
   Zap,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { UserProfile, PlanType } from '../types';
 
@@ -21,6 +23,8 @@ interface HeaderProps {
   onSelectTab: (tab: any) => void;
   activeTab: string;
   onPlanChange: (plan: PlanType) => void;
+  darkMode?: boolean;
+  onToggleDarkMode?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -31,6 +35,8 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectTab,
   activeTab,
   onPlanChange,
+  darkMode = false,
+  onToggleDarkMode,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [planDropdownOpen, setPlanDropdownOpen] = useState(false);
@@ -56,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-xs">
+    <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-100 dark:border-slate-800 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <div
@@ -68,11 +74,11 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xl font-bold tracking-tight text-gray-900">
-                NutriCalc<span className="text-emerald-600">Pro</span>
+              <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Foco<span className="text-emerald-600 dark:text-emerald-400">Peso</span>
               </span>
             </div>
-            <span className="text-[10px] text-gray-400 tracking-wider font-semibold uppercase block -mt-1">
+            <span className="text-[10px] text-gray-400 dark:text-slate-400 tracking-wider font-semibold uppercase block -mt-1">
               Saúde & Nutrição
             </span>
           </div>
@@ -80,28 +86,28 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Center Nav for Logged Out */}
         {!isLoggedIn && (
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600 dark:text-slate-300">
             <a
               href="#hero"
-              className="hover:text-emerald-600 transition-colors"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
             >
               Início
             </a>
             <a
               href="#recursos"
-              className="hover:text-emerald-600 transition-colors"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
             >
               Recurso & TMB
             </a>
             <a
               href="#precos"
-              className="hover:text-emerald-600 transition-colors"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
             >
               Planos e Preços
             </a>
             <a
               href="#depoimentos"
-              className="hover:text-emerald-600 transition-colors"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
             >
               Depoimentos
             </a>
@@ -110,6 +116,27 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Section / User Actions */}
         <div className="flex items-center gap-3">
+          {/* Theme Toggle Button */}
+          {onToggleDarkMode && (
+            <button
+              onClick={onToggleDarkMode}
+              id="theme-toggle-btn"
+              className="p-2 rounded-xl text-gray-500 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
+              title={darkMode ? 'Alternar para Tema Claro' : 'Alternar para Tema Escuro'}
+            >
+              {darkMode ? (
+                <>
+                  <Sun className="w-5 h-5 text-amber-400" />
+                  <span className="hidden sm:inline">Claro</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+                  <span className="hidden sm:inline">Escuro</span>
+                </>
+              )}
+            </button>
+          )}
           {isLoggedIn && user ? (
             <>
               {/* Simulator Plan Switcher (Explicit evaluator requirement) */}

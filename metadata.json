@@ -1,6 +1,6 @@
 {
-  "name": "Emagrecerei",
-  "description": "Aplicação de saúde e fitness Emagrecerei com gerenciamento de perfil, TMB, macros e integração Firebase.",
+  "name": "FocoPeso",
+  "description": "Aplicação de saúde e fitness FocoPeso com gerenciamento de perfil, TMB, macros e integração Firebase.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

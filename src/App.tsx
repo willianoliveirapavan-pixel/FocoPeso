@@ -29,6 +29,9 @@ export default function App() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    return localStorage.getItem('focopeso_dark_mode') === 'true';
+  });
 
   // Modals
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -44,6 +47,19 @@ export default function App() {
     const logged = checkLoggedIn();
     setIsAuth(logged);
   }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('focopeso_dark_mode', darkMode ? 'true' : 'false');
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
 
   const handleOpenAuth = (mode: 'login' | 'register', defaultPlan: PlanType = 'free') => {
     setAuthMode(mode);
@@ -75,7 +91,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/50 flex flex-col font-sans text-gray-800 antialiased selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-gray-50/50 dark:bg-slate-950 flex flex-col font-sans text-gray-800 dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white transition-colors">
       {/* Top Header */}
       <Header
         user={user}
@@ -85,6 +101,8 @@ export default function App() {
         onSelectTab={setActiveTab}
         activeTab={activeTab}
         onPlanChange={handlePlanChange}
+        darkMode={darkMode}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       {/* Main Body Layout */}
@@ -98,6 +116,8 @@ export default function App() {
             onSelectTab={setActiveTab}
             userPlan={user?.plan || 'free'}
             onOpenUpgradeModal={() => setActiveTab('pricing')}
+            darkMode={darkMode}
+            onToggleDarkMode={toggleDarkMode}
           />
 
           {/* Main Dashboard Content View */}

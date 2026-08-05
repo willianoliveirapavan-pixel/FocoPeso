@@ -40,7 +40,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
 
   const faqs = [
     {
-      q: 'Como funciona a calculadora de TMB do NutriCalc Pro?',
+      q: 'Como funciona a calculadora de TMB do FocoPeso?',
       a: 'Utilizamos fórmulas cientificamente validadas (Mifflin-St Jeor e Harris-Benedict) que calculam quantas calorias seu corpo queima em repouso absoluto. A partir disso, ajustamos para o seu nível de atividade física e objetivo (perda de gordura, manutenção ou hipertrofia).',
     },
     {
@@ -488,7 +488,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
               Histórias de Sucesso
             </h2>
             <p className="text-3xl font-extrabold text-gray-900 tracking-tight">
-              Quem usa o NutriCalc Pro aprova a transformação
+              Quem usa o FocoPeso aprova a transformação
             </p>
           </div>
 
@@ -520,7 +520,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
                 ))}
               </div>
               <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                "A divisão de macros do NutriCalc mudou meu treino. Ganhei massa magra sem acumular gordura abdominal. Ferramenta indispensável!"
+                "A divisão de macros do FocoPeso mudou meu treino. Ganhei massa magra sem acumular gordura abdominal. Ferramenta indispensável!"
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-teal-100 text-teal-800 font-bold flex items-center justify-center text-sm">
@@ -602,12 +602,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenAuth }) => {
           <div className="flex items-center gap-2">
             <Activity className="w-6 h-6 text-emerald-500" />
             <span className="text-lg font-bold text-white tracking-tight">
-              NutriCalc<span className="text-emerald-500">Pro</span>
+              Foco<span className="text-emerald-500">Peso</span>
             </span>
           </div>
 
           <p className="text-xs text-gray-500">
-            © {new Date().getFullYear()} NutriCalc Pro. Todos os direitos reservados. Saúde & Nutrição Científica em PT-BR.
+            © {new Date().getFullYear()} FocoPeso. Todos os direitos reservados. Saúde & Nutrição Científica em PT-BR.
           </p>
 
           <div className="flex items-center gap-4 text-xs font-medium">

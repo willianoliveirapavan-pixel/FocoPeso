@@ -39,7 +39,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({ user, onUpdatePlan }) =>
           <span>Planos & Desbloqueio de Recursos</span>
         </div>
         <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-          Gerenciar Assinatura NutriCalc Pro
+          Gerenciar Assinatura FocoPeso
         </h2>
         <p className="text-sm text-gray-500 mt-2">
           Seu plano atual é{' '}

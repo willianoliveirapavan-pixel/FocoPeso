@@ -35,7 +35,7 @@ export const DEFAULT_USER: UserProfile = {
 };
 
 export const INITIAL_WEIGHT_LOGS: WeightEntry[] = [
-  { id: 'w1', date: '2026-07-01', weight: 85.0, note: 'Início da jornada Emagrecerei' },
+  { id: 'w1', date: '2026-07-01', weight: 85.0, note: 'Início da jornada FocoPeso' },
   { id: 'w2', date: '2026-07-15', weight: 84.1, note: 'Foco no déficit calórico' },
   { id: 'w3', date: '2026-07-28', weight: 83.2, note: 'Aumentei hidratação' },
   { id: 'w4', date: '2026-08-04', weight: 82.5, note: 'Pesagem atual' },

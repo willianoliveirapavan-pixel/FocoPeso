@@ -79,7 +79,7 @@ export async function loginUserWithFirebase(
       // Criar documento se não existir
       const defaultProfile: UserProfile = {
         id: uid,
-        name: email.split('@')[0] || 'Usuário Emagrecerei',
+        name: email.split('@')[0] || 'Usuário FocoPeso',
         email,
         password: '',
         age: 28,
