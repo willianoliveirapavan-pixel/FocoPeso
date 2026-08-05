@@ -70,7 +70,13 @@ export function getUser(): UserProfile {
   try {
     const data = localStorage.getItem(STORAGE_KEYS.USER);
     if (!data) return DEFAULT_USER;
-    return JSON.parse(data);
+    const user = JSON.parse(data);
+    
+    // Migration: Map old plans to new ones
+    if (user.plan === 'pro') user.plan = 'beta';
+    if (user.plan === 'premium') user.plan = 'alfa';
+    
+    return user;
   } catch {
     return DEFAULT_USER;
   }
