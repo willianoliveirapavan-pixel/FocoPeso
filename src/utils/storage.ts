@@ -184,7 +184,6 @@ export function getWaterLog(): WaterLog {
   }
   return { date: today, targetMl: 2500, consumedMl: 1250 };
 }
-
 export function saveWaterLog(log: WaterLog): void {
   const user = getUser();
   try {
@@ -195,5 +194,9 @@ export function saveWaterLog(log: WaterLog): void {
   } catch (e) {
     console.error('Error saving water log', e);
   }
+}
+
+export function clearStorage(): void {
+  Object.values(STORAGE_KEYS).forEach(key => localStorage.removeItem(key));
 }
 

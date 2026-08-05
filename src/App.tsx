@@ -5,12 +5,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { UserProfile, PlanType, TabType } from './types';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
 import {
   getUser,
   saveUser,
   isLoggedIn as checkLoggedIn,
   setLoggedIn,
   updateUserPlan,
+  clearStorage,
 } from './utils/storage';
 import { logoutFirebase } from './services/firebaseService';
 import { Header } from './components/Header';
@@ -44,10 +47,20 @@ export default function App() {
 
   // Initialize stored state
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (!firebaseUser) {
+        clearStorage();
+        setIsAuth(false);
+        setUser(null);
+      }
+    });
+    
     const storedUser = getUser();
     setUser(storedUser);
     const logged = checkLoggedIn();
     setIsAuth(logged);
+    
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -77,8 +90,9 @@ export default function App() {
 
   const handleLogout = () => {
     logoutFirebase();
-    setLoggedIn(false);
+    clearStorage();
     setIsAuth(false);
+    setUser(null);
   };
 
   const handleUpdateUser = (updatedUser: UserProfile) => {
