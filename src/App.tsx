@@ -24,6 +24,7 @@ import { MealPlanTab } from './components/MealPlanTab';
 import { FoodDiaryTab } from './components/FoodDiaryTab';
 import { PricingTab } from './components/PricingTab';
 import { AiAssistantModal } from './components/AiAssistantModal';
+import { PlansModal } from './components/PlansModal';
 
 export default function App() {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -39,6 +40,7 @@ export default function App() {
   const [authDefaultPlan, setAuthDefaultPlan] = useState<PlanType>('free');
 
   const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
+  const [plansModalOpen, setPlansModalOpen] = useState(false);
 
   // Initialize stored state
   useEffect(() => {
@@ -88,6 +90,11 @@ export default function App() {
   const handlePlanChange = (newPlan: PlanType) => {
     const updated = updateUserPlan(newPlan);
     setUser(updated);
+    setActiveTab('overview');
+  };
+
+  const handleOpenPlansModal = () => {
+    setPlansModalOpen(true);
   };
 
   return (
@@ -101,6 +108,7 @@ export default function App() {
         onSelectTab={setActiveTab}
         activeTab={activeTab}
         onPlanChange={handlePlanChange}
+        onOpenPlansModal={handleOpenPlansModal}
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
@@ -115,7 +123,7 @@ export default function App() {
             activeTab={activeTab}
             onSelectTab={setActiveTab}
             userPlan={user?.plan || 'free'}
-            onOpenUpgradeModal={() => setActiveTab('pricing')}
+            onOpenUpgradeModal={handleOpenPlansModal}
             darkMode={darkMode}
             onToggleDarkMode={toggleDarkMode}
           />
@@ -126,7 +134,7 @@ export default function App() {
               <OverviewTab
                 user={user}
                 onSelectTab={setActiveTab}
-                onOpenUpgradeModal={() => setActiveTab('pricing')}
+                onOpenUpgradeModal={handleOpenPlansModal}
               />
             )}
 
@@ -138,14 +146,14 @@ export default function App() {
               <CalculatorTab
                 user={user}
                 onUpdateUser={handleUpdateUser}
-                onOpenUpgradeModal={() => setActiveTab('pricing')}
+                onOpenUpgradeModal={handleOpenPlansModal}
               />
             )}
 
             {user && activeTab === 'mealplan' && (
               <MealPlanTab
                 user={user}
-                onOpenUpgradeModal={() => setActiveTab('pricing')}
+                onOpenUpgradeModal={handleOpenPlansModal}
                 onOpenAiAssistant={() => setAiAssistantOpen(true)}
               />
             )}
@@ -167,6 +175,16 @@ export default function App() {
         onClose={() => setAuthModalOpen(false)}
         onSuccess={handleAuthSuccess}
       />
+
+      {/* Plans Modal */}
+      {user && (
+        <PlansModal
+          isOpen={plansModalOpen}
+          user={user}
+          onClose={() => setPlansModalOpen(false)}
+          onUpdatePlan={handlePlanChange}
+        />
+      )}
 
       {/* AI Assistant Drawer Modal */}
       {user && (

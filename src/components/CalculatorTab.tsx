@@ -39,30 +39,30 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       <div>
-        <h2 className="text-2xl font-extrabold text-gray-900">
+        <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">
           Calculadora de TMB & Macronutrientes
         </h2>
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
           Ajuste as variáveis abaixo para simular o impacto nas suas calorias e macronutrientes.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Form Inputs (Auto-filled from user profile) */}
-        <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-xs">
-          <h3 className="text-base font-bold text-gray-900 mb-6 pb-3 border-b border-gray-100 flex items-center justify-between">
+        <div className="lg:col-span-5 bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-slate-800 shadow-xs">
+          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-6 pb-3 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
             <span className="flex items-center gap-2">
-              <Calculator className="w-5 h-5 text-emerald-600" />
+              <Calculator className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               Parâmetros de Cálculo
             </span>
-            <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">
+            <span className="text-[10px] bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-full">
               Dados do Perfil
             </span>
           </h3>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                 Fórmula da Taxa Metabólica
               </label>
               <select
@@ -73,7 +73,7 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                     formula: e.target.value as FormulaType,
                   })
                 }
-                className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 bg-white"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
               >
                 <option value="mifflin">Mifflin-St Jeor (Padrão ouro moderno)</option>
                 <option value="harris">Harris-Benedict (Versão revisada)</option>
@@ -82,7 +82,7 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   Gênero
                 </label>
                 <select
@@ -93,7 +93,7 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                       gender: e.target.value as Gender,
                     })
                   }
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 bg-white"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                 >
                   <option value="masculino">Masculino</option>
                   <option value="feminino">Feminino</option>
@@ -101,7 +101,7 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   Idade (anos)
                 </label>
                 <input
@@ -110,14 +110,14 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                   onChange={(e) =>
                     setCalcProfile({ ...calcProfile, age: Number(e.target.value) })
                   }
-                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200"
+                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   Peso Corporal (kg)
                 </label>
                 <input
@@ -130,12 +130,12 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                       currentWeight: Number(e.target.value),
                     })
                   }
-                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200"
+                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   Altura (cm)
                 </label>
                 <input
@@ -147,13 +147,13 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                       height: Number(e.target.value),
                     })
                   }
-                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200"
+                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                 Fator de Atividade
               </label>
               <select
@@ -164,7 +164,7 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                     activityLevel: Number(e.target.value),
                   })
                 }
-                className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 bg-white"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
               >
                 {ACTIVITY_LEVEL_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -175,17 +175,17 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                 Objetivo
               </label>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setCalcProfile({ ...calcProfile, goal: 'lose' })}
-                  className={`py-2 rounded-xl text-xs font-bold border ${
+                  className={`py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                     calcProfile.goal === 'lose'
-                      ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
-                      : 'bg-white border-gray-200 text-gray-600'
+                      ? 'bg-emerald-50 dark:bg-emerald-950 border-emerald-500 text-emerald-800 dark:text-emerald-300'
+                      : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300'
                   }`}
                 >
                   Perder Peso
@@ -193,10 +193,10 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                 <button
                   type="button"
                   onClick={() => setCalcProfile({ ...calcProfile, goal: 'maintain' })}
-                  className={`py-2 rounded-xl text-xs font-bold border ${
+                  className={`py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                     calcProfile.goal === 'maintain'
-                      ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
-                      : 'bg-white border-gray-200 text-gray-600'
+                      ? 'bg-emerald-50 dark:bg-emerald-950 border-emerald-500 text-emerald-800 dark:text-emerald-300'
+                      : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300'
                   }`}
                 >
                   Manter
@@ -204,10 +204,10 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
                 <button
                   type="button"
                   onClick={() => setCalcProfile({ ...calcProfile, goal: 'gain' })}
-                  className={`py-2 rounded-xl text-xs font-bold border ${
+                  className={`py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                     calcProfile.goal === 'gain'
-                      ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
-                      : 'bg-white border-gray-200 text-gray-600'
+                      ? 'bg-emerald-50 dark:bg-emerald-950 border-emerald-500 text-emerald-800 dark:text-emerald-300'
+                      : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300'
                   }`}
                 >
                   Ganhar Massa
@@ -221,36 +221,36 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
         <div className="lg:col-span-7 space-y-6">
           {/* TMB & TDEE Free Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-6 rounded-3xl bg-white border border-gray-100 shadow-xs">
+            <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xs">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 dark:bg-orange-950 text-orange-500 dark:text-orange-400 flex items-center justify-center">
                   <Flame className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-500 uppercase">TMB (Basal)</p>
-                  <p className="text-2xl font-extrabold text-gray-900">
-                    {macros.tmb} <span className="text-xs font-semibold text-gray-500">kcal</span>
+                  <p className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase">TMB (Basal)</p>
+                  <p className="text-2xl font-extrabold text-gray-900 dark:text-white">
+                    {macros.tmb} <span className="text-xs font-semibold text-gray-500 dark:text-slate-400">kcal</span>
                   </p>
                 </div>
               </div>
-              <p className="text-[11px] text-gray-500">
+              <p className="text-[11px] text-gray-500 dark:text-slate-400">
                 Energia mínima gasta em repouso.
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-white border border-gray-100 shadow-xs">
+            <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-xs">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                   <TrendingUp className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-gray-500 uppercase">Gasto Total (TDEE)</p>
-                  <p className="text-2xl font-extrabold text-gray-900">
-                    {macros.tdee} <span className="text-xs font-semibold text-gray-500">kcal</span>
+                  <p className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase">Gasto Total (TDEE)</p>
+                  <p className="text-2xl font-extrabold text-gray-900 dark:text-white">
+                    {macros.tdee} <span className="text-xs font-semibold text-gray-500 dark:text-slate-400">kcal</span>
                   </p>
                 </div>
               </div>
-              <p className="text-[11px] text-gray-500">
+              <p className="text-[11px] text-gray-500 dark:text-slate-400">
                 Calorias totais queimadas por dia.
               </p>
             </div>
@@ -284,19 +284,19 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
 
           {/* MACRONUTRIENT PAYWALL PROTECTED SECTION (Exigência Requisito 5) */}
           <PaywallOverlay
-            requiredPlan="pro"
+            requiredPlan="beta"
             currentPlan={user.plan}
             title="Divisão Detalhada de Macronutrientes"
-            description="O Plano Pro libera a quantidade precisa em gramas (g/dia) de Proteínas, Carboidratos e Gorduras com gráfico interativo de distribuição."
+            description="O Plano Beta libera a quantidade precisa em gramas (g/dia) de Proteínas, Carboidratos e Gorduras com gráfico interativo de distribuição."
             onUpgradeClick={onOpenUpgradeModal}
           >
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-xs">
-              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-slate-800 shadow-xs">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center justify-between">
                 <span className="flex items-center gap-2">
-                  <PieChartIcon className="w-5 h-5 text-emerald-600" />
+                  <PieChartIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   Divisão de Macronutrientes em Gramas
                 </span>
-                <span className="text-xs text-gray-500 font-normal">
+                <span className="text-xs text-gray-500 dark:text-slate-400 font-normal">
                   Pro / Premium Unlocked
                 </span>
               </h3>
@@ -332,46 +332,46 @@ export const CalculatorTab: React.FC<CalculatorTabProps> = ({
 
                 <div className="space-y-4">
                   {/* Protein */}
-                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
+                  <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-xs text-emerald-900">
+                      <span className="font-bold text-xs text-emerald-900 dark:text-emerald-200">
                         🥩 Proteínas ({macros.proteinPct}%)
                       </span>
-                      <span className="text-sm font-black text-emerald-700">
+                      <span className="text-sm font-black text-emerald-700 dark:text-emerald-300">
                         {macros.proteinGrams} g / dia
                       </span>
                     </div>
-                    <p className="text-[11px] text-emerald-700">
+                    <p className="text-[11px] text-emerald-700 dark:text-emerald-400">
                       ~{(macros.proteinGrams / calcProfile.currentWeight).toFixed(1)}g por kg corporal
                     </p>
                   </div>
 
                   {/* Carbs */}
-                  <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100">
+                  <div className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-900">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-xs text-blue-900">
+                      <span className="font-bold text-xs text-blue-900 dark:text-blue-200">
                         🍚 Carboidratos ({macros.carbsPct}%)
                       </span>
-                      <span className="text-sm font-black text-blue-700">
+                      <span className="text-sm font-black text-blue-700 dark:text-blue-300">
                         {macros.carbsGrams} g / dia
                       </span>
                     </div>
-                    <p className="text-[11px] text-blue-700">
+                    <p className="text-[11px] text-blue-700 dark:text-blue-400">
                       Principal fonte de energia para treinos e foco
                     </p>
                   </div>
 
                   {/* Fats */}
-                  <div className="p-4 rounded-2xl bg-amber-50 border border-amber-100">
+                  <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-100 dark:border-amber-900">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-xs text-amber-900">
+                      <span className="font-bold text-xs text-amber-900 dark:text-amber-200">
                         🥑 Gorduras Boas ({macros.fatsPct}%)
                       </span>
-                      <span className="text-sm font-black text-amber-700">
+                      <span className="text-sm font-black text-amber-700 dark:text-amber-300">
                         {macros.fatsGrams} g / dia
                       </span>
                     </div>
-                    <p className="text-[11px] text-amber-700">
+                    <p className="text-[11px] text-amber-700 dark:text-amber-400">
                       Regulação hormonal e saúde metabólica
                     </p>
                   </div>

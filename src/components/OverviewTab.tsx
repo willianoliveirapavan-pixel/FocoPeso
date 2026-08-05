@@ -272,16 +272,16 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             <h3 className="text-xl font-extrabold mb-2">
               {user.plan === 'free'
                 ? 'Plano Grátis Limitado'
-                : user.plan === 'pro'
-                ? 'Plano Pro Ativo'
-                : 'Plano Premium VIP'}
+                : user.plan === 'beta'
+                ? 'Plano Beta Ativo'
+                : 'Plano Alfa VIP'}
             </h3>
 
             <p className="text-xs text-gray-300 leading-relaxed mb-6">
               {user.plan === 'free'
                 ? 'Você tem acesso ao perfil e cálculo de TMB. Desbloqueie a divisão de macros e gráficos avançados.'
-                : user.plan === 'pro'
-                ? 'Você possui acesso a macros e histórico. Faça upgrade para o Premium para sugestão de cardápio e IA.'
+                : user.plan === 'beta'
+                ? 'Você possui acesso a macros e histórico. Faça upgrade para o Alfa para sugestão de cardápio e IA.'
                 : 'Você tem acesso ilimitado a todos os recursos da plataforma!'}
             </p>
           </div>
@@ -293,9 +293,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           >
             <ShieldCheck className="w-4 h-4" />
             {user.plan === 'free'
-              ? 'Fazer Upgrade para o Pro (R$ 19,90)'
-              : user.plan === 'pro'
-              ? 'Fazer Upgrade para Premium'
+              ? 'Fazer Upgrade para o Beta (R$ 19,90)'
+              : user.plan === 'beta'
+              ? 'Fazer Upgrade para Alfa'
               : 'Gerenciar Minha Assinatura'}
           </button>
         </div>

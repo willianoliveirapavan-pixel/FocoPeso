@@ -90,11 +90,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <nav className="space-y-1">
             {menuItems.map((item) => {
               const isActive = activeTab === item.id;
+              const handleClick = () => {
+                if (item.locked || item.id === 'pricing') {
+                  onOpenUpgradeModal();
+                }
+                onSelectTab(item.id);
+              };
+
               return (
                 <button
                   key={item.id}
                   id={`sidebar-nav-${item.id}`}
-                  onClick={() => onSelectTab(item.id)}
+                  onClick={handleClick}
                   className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer ${
                     isActive
                       ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-semibold shadow-2xs'

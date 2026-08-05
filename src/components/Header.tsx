@@ -23,6 +23,7 @@ interface HeaderProps {
   onSelectTab: (tab: any) => void;
   activeTab: string;
   onPlanChange: (plan: PlanType) => void;
+  onOpenPlansModal?: () => void;
   darkMode?: boolean;
   onToggleDarkMode?: () => void;
 }
@@ -35,6 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectTab,
   activeTab,
   onPlanChange,
+  onOpenPlansModal,
   darkMode = false,
   onToggleDarkMode,
 }) => {
@@ -49,13 +51,13 @@ export const Header: React.FC<HeaderProps> = ({
       color: 'bg-gray-100 text-gray-700 border-gray-300',
       icon: <User className="w-3.5 h-3.5 text-gray-500" />,
     },
-    pro: {
-      label: 'Plano PRO',
+    beta: {
+      label: 'Plano Beta',
       color: 'bg-amber-100 text-amber-800 border-amber-300 font-semibold',
       icon: <Crown className="w-3.5 h-3.5 text-amber-600" />,
     },
-    premium: {
-      label: 'Plano PREMIUM',
+    alfa: {
+      label: 'Plano Alfa',
       color: 'bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-900 border-emerald-300 font-bold',
       icon: <Sparkles className="w-3.5 h-3.5 text-emerald-600" />,
     },
@@ -186,40 +188,40 @@ export const Header: React.FC<HeaderProps> = ({
 
                       <button
                         onClick={() => {
-                          onPlanChange('pro');
+                          onPlanChange('beta');
                           setPlanDropdownOpen(false);
                         }}
                         className={`w-full text-left px-3 py-2 rounded-xl flex items-center justify-between cursor-pointer ${
-                          currentPlan === 'pro'
+                          currentPlan === 'beta'
                             ? 'bg-amber-50 text-amber-900 font-bold'
                             : 'hover:bg-amber-50/50 text-gray-600'
                         }`}
                       >
                         <span className="flex items-center gap-2">
                           <Crown className="w-4 h-4 text-amber-600" />
-                          Pro (Macros & Progresso)
+                          Beta (Macros & Progresso)
                         </span>
-                        {currentPlan === 'pro' && (
+                        {currentPlan === 'beta' && (
                           <span className="w-2 h-2 rounded-full bg-amber-500" />
                         )}
                       </button>
 
                       <button
                         onClick={() => {
-                          onPlanChange('premium');
+                          onPlanChange('alfa');
                           setPlanDropdownOpen(false);
                         }}
                         className={`w-full text-left px-3 py-2 rounded-xl flex items-center justify-between cursor-pointer ${
-                          currentPlan === 'premium'
+                          currentPlan === 'alfa'
                             ? 'bg-emerald-50 text-emerald-900 font-bold'
                             : 'hover:bg-emerald-50/50 text-gray-600'
                         }`}
                       >
                         <span className="flex items-center gap-2">
                           <Sparkles className="w-4 h-4 text-emerald-600" />
-                          Premium (Cardápio + IA)
+                          Alfa (Cardápio + IA)
                         </span>
-                        {currentPlan === 'premium' && (
+                        {currentPlan === 'alfa' && (
                           <span className="w-2 h-2 rounded-full bg-emerald-500" />
                         )}
                       </button>
@@ -364,7 +366,11 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onSelectTab('pricing');
+                  if (onOpenPlansModal) {
+                    onOpenPlansModal();
+                  } else {
+                    onSelectTab('pricing');
+                  }
                 }}
                 className="w-full text-left px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 text-sm font-semibold"
               >

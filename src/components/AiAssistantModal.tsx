@@ -65,22 +65,22 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl max-w-lg w-full h-[600px] flex flex-col p-6 shadow-2xl border border-gray-100 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 dark:bg-black/70 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full h-[600px] flex flex-col p-6 shadow-2xl border border-gray-100 dark:border-slate-800 relative">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+        <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-md">
               <Bot className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-extrabold text-gray-900 text-base flex items-center gap-1.5">
+              <h3 className="font-extrabold text-gray-900 dark:text-white text-base flex items-center gap-1.5">
                 NutriAssistente IA
-                <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-full">
                   Gemini VIP
                 </span>
               </h3>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-slate-400">
                 Respostas sobre substituição de alimentos e macros
               </p>
             </div>
@@ -88,7 +88,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full cursor-pointer"
+            className="p-2 text-gray-400 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -104,7 +104,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
               }`}
             >
               {m.sender === 'ai' && (
-                <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                <div className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
                   <Bot className="w-4 h-4" />
                 </div>
               )}
@@ -113,14 +113,14 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                 className={`max-w-[80%] p-3.5 rounded-2xl text-xs leading-relaxed ${
                   m.sender === 'user'
                     ? 'bg-emerald-600 text-white font-medium rounded-tr-none'
-                    : 'bg-gray-100 text-gray-800 rounded-tl-none border border-gray-200/60'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-slate-100 rounded-tl-none border border-gray-200/60 dark:border-slate-700'
                 }`}
               >
                 {m.text}
               </div>
 
               {m.sender === 'user' && (
-                <div className="w-7 h-7 rounded-lg bg-gray-200 text-gray-700 flex items-center justify-center shrink-0">
+                <div className="w-7 h-7 rounded-lg bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-slate-200 flex items-center justify-center shrink-0">
                   <User className="w-4 h-4" />
                 </div>
               )}
@@ -128,21 +128,21 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           ))}
 
           {loading && (
-            <div className="flex items-center gap-2 text-xs text-gray-400 p-2">
-              <Loader2 className="w-4 h-4 animate-spin text-emerald-600" />
+            <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-slate-400 p-2">
+              <Loader2 className="w-4 h-4 animate-spin text-emerald-600 dark:text-emerald-400" />
               <span>NutriAssistente está gerando resposta...</span>
             </div>
           )}
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSend} className="pt-3 border-t border-gray-100 flex gap-2">
+        <form onSubmit={handleSend} className="pt-3 border-t border-gray-100 dark:border-slate-800 flex gap-2">
           <input
             type="text"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Ex: Como posso substituir 150g de frango no jantar?"
-            className="flex-1 px-4 py-2.5 text-xs rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+            className="flex-1 px-4 py-2.5 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
           />
           <button
             type="submit"

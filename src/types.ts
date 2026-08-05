@@ -1,4 +1,4 @@
-export type PlanType = 'free' | 'pro' | 'premium';
+export type PlanType = 'free' | 'beta' | 'alfa';
 
 export type Gender = 'masculino' | 'feminino';
 

@@ -59,10 +59,10 @@ export const MealPlanTab: React.FC<MealPlanTabProps> = ({
     <div className="space-y-8 animate-in fade-in duration-300">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-gray-900">
+          <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">
             Sugestão de Cardápio Diário
           </h2>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
             Plano alimentar equilibrado e ajustado para alcançar {macros.targetCalories} kcal/dia.
           </p>
         </div>
@@ -127,13 +127,13 @@ export const MealPlanTab: React.FC<MealPlanTabProps> = ({
 
           {/* Meal Plan Categories Grid */}
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-              <Utensils className="w-5 h-5 text-emerald-600" />
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <Utensils className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               Refeições Recomendadas para o Dia
             </h3>
             <button
               onClick={handleRegeneratePlan}
-              className="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1.5 cursor-pointer"
+              className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 flex items-center gap-1.5 cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               Recalcular Refeições
@@ -144,18 +144,18 @@ export const MealPlanTab: React.FC<MealPlanTabProps> = ({
             {mealPlans.map((cat, idx) => (
               <div
                 key={cat.category}
-                className="bg-white rounded-3xl p-6 border border-gray-100 shadow-xs hover:border-gray-200 transition-all"
+                className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-gray-100 dark:border-slate-800 shadow-xs hover:border-gray-200 dark:hover:border-slate-700 transition-all"
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100 mb-4 gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100 dark:border-slate-800 mb-4 gap-2">
                   <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 font-extrabold flex items-center justify-center text-xs">
+                    <span className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-extrabold flex items-center justify-center text-xs">
                       {idx + 1}
                     </span>
                     <div>
-                      <h4 className="font-extrabold text-gray-900 text-base">
+                      <h4 className="font-extrabold text-gray-900 dark:text-white text-base">
                         {cat.title}
                       </h4>
-                      <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                      <div className="flex items-center gap-1.5 text-xs text-gray-400 dark:text-slate-400">
                         <Clock className="w-3.5 h-3.5" />
                         <span>Horário ideal: {cat.timeRange}</span>
                       </div>
@@ -163,14 +163,14 @@ export const MealPlanTab: React.FC<MealPlanTabProps> = ({
                   </div>
 
                   {/* Meal Totals Badge */}
-                  <div className="flex items-center gap-2 text-xs font-bold bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-100">
-                    <span className="text-gray-900">{cat.totalCalories} kcal</span>
-                    <span className="text-gray-300">•</span>
-                    <span className="text-emerald-700">{cat.totalProtein}g Prot</span>
-                    <span className="text-gray-300">•</span>
-                    <span className="text-blue-700">{cat.totalCarbs}g Carb</span>
-                    <span className="text-gray-300">•</span>
-                    <span className="text-amber-700">{cat.totalFat}g Gord</span>
+                  <div className="flex items-center gap-2 text-xs font-bold bg-gray-50 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-gray-100 dark:border-slate-700">
+                    <span className="text-gray-900 dark:text-white">{cat.totalCalories} kcal</span>
+                    <span className="text-gray-300 dark:text-slate-600">•</span>
+                    <span className="text-emerald-700 dark:text-emerald-400">{cat.totalProtein}g Prot</span>
+                    <span className="text-gray-300 dark:text-slate-600">•</span>
+                    <span className="text-blue-700 dark:text-blue-400">{cat.totalCarbs}g Carb</span>
+                    <span className="text-gray-300 dark:text-slate-600">•</span>
+                    <span className="text-amber-700 dark:text-amber-400">{cat.totalFat}g Gord</span>
                   </div>
                 </div>
 
@@ -179,25 +179,25 @@ export const MealPlanTab: React.FC<MealPlanTabProps> = ({
                   {cat.items.map((item) => (
                     <div
                       key={item.id}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-2xl bg-gray-50 hover:bg-gray-100/70 transition-colors gap-2"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-2xl bg-gray-50 dark:bg-slate-800/80 hover:bg-gray-100/70 dark:hover:bg-slate-800 transition-colors gap-2"
                     >
                       <div>
-                        <p className="font-bold text-sm text-gray-800">
+                        <p className="font-bold text-sm text-gray-800 dark:text-white">
                           {item.name}
                         </p>
-                        <p className="text-xs text-gray-500">
-                          Porção recomendada: <strong className="text-gray-700">{item.portion}</strong>
+                        <p className="text-xs text-gray-500 dark:text-slate-400">
+                          Porção recomendada: <strong className="text-gray-700 dark:text-slate-200">{item.portion}</strong>
                         </p>
                       </div>
 
                       <div className="flex items-center gap-4 text-xs">
-                        <span className="font-extrabold text-gray-900">
+                        <span className="font-extrabold text-gray-900 dark:text-white">
                           {item.calories} kcal
                         </span>
-                        <div className="text-[11px] text-gray-500 font-medium">
-                          P: <strong className="text-emerald-700">{item.protein}g</strong> | C:{' '}
-                          <strong className="text-blue-700">{item.carbs}g</strong> | G:{' '}
-                          <strong className="text-amber-700">{item.fat}g</strong>
+                        <div className="text-[11px] text-gray-500 dark:text-slate-400 font-medium">
+                          P: <strong className="text-emerald-700 dark:text-emerald-400">{item.protein}g</strong> | C:{' '}
+                          <strong className="text-blue-700 dark:text-blue-400">{item.carbs}g</strong> | G:{' '}
+                          <strong className="text-amber-700 dark:text-amber-400">{item.fat}g</strong>
                         </div>
                       </div>
                     </div>
