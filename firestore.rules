@@ -4,7 +4,7 @@ service cloud.firestore {
     match /users/{userId} {
       allow read: if request.auth != null && request.auth.uid == userId;
       allow update: if request.auth != null && request.auth.uid == userId && 
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'age', 'height', 'currentWeight', 'targetWeight', 'activityLevel', 'goal', 'gender']);
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'age', 'height', 'currentWeight', 'targetWeight', 'activityLevel', 'goal', 'gender', 'plan']);
     }
     match /weightLogs/{logId} {
       allow read, write: if request.auth != null && (resource == null || resource.data.userId == request.auth.uid) && (request.resource == null || request.resource.data.userId == request.auth.uid);
