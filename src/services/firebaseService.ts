@@ -76,8 +76,8 @@ export async function loginUserWithFirebase(
     if (docSnap.exists()) {
       const data = docSnap.data() as UserProfile;
       // Migration: Map old plans to new ones
-      if (data.plan === 'pro') data.plan = 'beta';
-      if (data.plan === 'premium') data.plan = 'alfa';
+      if ((data.plan as any) === 'pro') data.plan = 'beta';
+      if ((data.plan as any) === 'premium') data.plan = 'alfa';
       return data;
     } else {
       // Criar documento se não existir
@@ -144,8 +144,8 @@ export async function getUserProfileFromFirestore(userId: string): Promise<UserP
     if (docSnap.exists()) {
       const data = docSnap.data() as UserProfile;
       // Migration: Map old plans to new ones
-      if (data.plan === 'pro') data.plan = 'beta';
-      if (data.plan === 'premium') data.plan = 'alfa';
+      if ((data.plan as any) === 'pro') data.plan = 'beta';
+      if ((data.plan as any) === 'premium') data.plan = 'alfa';
       return data;
     }
   } catch (e) {
