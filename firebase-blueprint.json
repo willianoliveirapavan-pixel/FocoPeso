@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "users": {
+      "description": "Perfil dos usuários do aplicativo Emagrecerei",
+      "properties": {
+        "id": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string" },
+        "height": { "type": "number" },
+        "currentWeight": { "type": "number" },
+        "targetWeight": { "type": "number" },
+        "activityLevel": { "type": "string" },
+        "goal": { "type": "string" },
+        "plan": { "type": "string" }
+      }
+    },
+    "weightLogs": {
+      "description": "Histórico de registros de peso do usuário",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "weight": { "type": "number" },
+        "notes": { "type": "string" }
+      }
+    },
+    "foodLogs": {
+      "description": "Diário alimentar do usuário",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fat": { "type": "number" }
+      }
+    },
+    "waterLogs": {
+      "description": "Registro de consumo diário de água",
+      "properties": {
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "consumedMl": { "type": "number" },
+        "targetMl": { "type": "number" }
+      }
+    }
+  }
+}
