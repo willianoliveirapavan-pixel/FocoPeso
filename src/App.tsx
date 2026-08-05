@@ -121,15 +121,7 @@ export default function App() {
   };
 
   const handleOpenPlansModal = () => {
-    if (!user) return;
-    
-    if (user.plan === 'free') {
-      window.location.href = 'https://buy.stripe.com/28E5kFffq1yP9ZteUc3Ru00'; // Beta
-    } else if (user.plan === 'beta') {
-      window.location.href = 'https://buy.stripe.com/6oUeVf4AM6T9gnReUc3Ru01'; // Alfa
-    } else {
-      setPlansModalOpen(true);
-    }
+    setPlansModalOpen(true);
   };
 
   return (

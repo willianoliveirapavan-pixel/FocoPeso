@@ -31,14 +31,20 @@ export const PlansModal: React.FC<PlansModalProps> = ({
   if (!isOpen) return null;
 
   const handleConfirmUpgrade = (plan: PlanType) => {
-    setIsProcessing(true);
-    setTimeout(() => {
-      onUpdatePlan(plan);
-      setIsProcessing(false);
-      setCheckoutPlan(null);
-      confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
-      onClose();
-    }, 600);
+    if (plan === 'free') {
+      setIsProcessing(true);
+      setTimeout(() => {
+        onUpdatePlan(plan);
+        setIsProcessing(false);
+        setCheckoutPlan(null);
+        confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
+        onClose();
+      }, 600);
+    } else if (plan === 'beta') {
+      window.location.href = 'https://buy.stripe.com/28E5kFffq1yP9ZteUc3Ru00';
+    } else if (plan === 'alfa') {
+      window.location.href = 'https://buy.stripe.com/6oUeVf4AM6T9gnReUc3Ru01';
+    }
   };
 
   return (
