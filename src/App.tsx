@@ -15,7 +15,7 @@ import {
   updateUserPlan,
   clearStorage,
 } from './utils/storage';
-import { logoutFirebase, getUserProfileFromFirestore } from './services/firebaseService';
+import { logoutFirebase, getUserProfileFromFirestore, saveUserProfileToFirestore } from './services/firebaseService';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { LandingPage } from './components/LandingPage';
@@ -45,21 +45,29 @@ export default function App() {
   const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
   const [plansModalOpen, setPlansModalOpen] = useState(false);
 
-  // Initialize stored state
+  // Initialize auth state
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (!firebaseUser) {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // User is logged in, load profile
+        const profile = await getUserProfileFromFirestore(firebaseUser.uid);
+        if (profile) {
+          setUser(profile);
+          saveUser(profile);
+          setIsAuth(true);
+        } else {
+          // Handle case where user auth exists but profile is missing
+          setIsAuth(false);
+          setUser(null);
+        }
+      } else {
+        // User is logged out
         clearStorage();
         setIsAuth(false);
         setUser(null);
       }
     });
-    
-    const storedUser = getUser();
-    setUser(storedUser);
-    const logged = checkLoggedIn();
-    setIsAuth(logged);
-    
+
     return unsubscribe;
   }, []);
 
@@ -108,9 +116,10 @@ export default function App() {
     setUser(null);
   };
 
-  const handleUpdateUser = (updatedUser: UserProfile) => {
+  const handleUpdateUser = async (updatedUser: UserProfile) => {
     setUser(updatedUser);
     saveUser(updatedUser);
+    await saveUserProfileToFirestore(updatedUser);
   };
 
   // Plan Switcher (simulates plan changes live for testing locked/unlocked features)
@@ -208,7 +217,10 @@ export default function App() {
         <PlansModal
           isOpen={plansModalOpen}
           user={user}
-          onClose={() => setPlansModalOpen(false)}
+          onClose={() => {
+            setPlansModalOpen(false);
+            setActiveTab('overview');
+          }}
           onUpdatePlan={handlePlanChange}
         />
       )}

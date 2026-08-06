@@ -48,18 +48,18 @@ export const Header: React.FC<HeaderProps> = ({
   const planBadgeConfig = {
     free: {
       label: 'Plano Grátis',
-      color: 'bg-gray-100 text-gray-700 border-gray-300',
-      icon: <User className="w-3.5 h-3.5 text-gray-500" />,
+      color: 'bg-gray-100 text-gray-700 border-gray-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600',
+      icon: <User className="w-3.5 h-3.5 text-gray-500 dark:text-slate-400" />,
     },
     beta: {
       label: 'Plano Beta',
-      color: 'bg-amber-100 text-amber-800 border-amber-300 font-semibold',
-      icon: <Crown className="w-3.5 h-3.5 text-amber-600" />,
+      color: 'bg-amber-100 text-amber-800 border-amber-300 font-semibold dark:bg-amber-900/30 dark:text-amber-200 dark:border-amber-700',
+      icon: <Crown className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />,
     },
     alfa: {
       label: 'Plano Alfa',
-      color: 'bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-900 border-emerald-300 font-bold',
-      icon: <Sparkles className="w-3.5 h-3.5 text-emerald-600" />,
+      color: 'bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-900 border-emerald-300 font-bold dark:from-emerald-900/30 dark:to-teal-900/30 dark:text-emerald-200 dark:border-emerald-700',
+      icon: <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />,
     },
   };
 
@@ -141,99 +141,10 @@ export const Header: React.FC<HeaderProps> = ({
           )}
           {isLoggedIn && user ? (
             <>
-              {/* Simulator Plan Switcher (Explicit evaluator requirement) */}
-              <div className="relative">
-                <button
-                  id="plan-switcher-btn"
-                  onClick={() => setPlanDropdownOpen(!planDropdownOpen)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs border shadow-2xs transition-all cursor-pointer ${planBadgeConfig[currentPlan].color}`}
-                  title="Clique para simular e testar os planos em tempo real"
-                >
-                  {planBadgeConfig[currentPlan].icon}
-                  <span>{planBadgeConfig[currentPlan].label}</span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-60" />
-                </button>
-
-                {planDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white border border-gray-100 shadow-xl p-2 z-50 text-xs animate-in fade-in slide-in-from-top-2 duration-200">
-                    <div className="px-3 py-2 border-b border-gray-100">
-                      <p className="font-semibold text-gray-800">
-                        Testador de Planos (Simulador)
-                      </p>
-                      <p className="text-[11px] text-gray-500">
-                        Alterne entre os planos para testar os recursos bloqueados:
-                      </p>
-                    </div>
-
-                    <div className="py-1 space-y-1">
-                      <button
-                        onClick={() => {
-                          onPlanChange('free');
-                          setPlanDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-xl flex items-center justify-between cursor-pointer ${
-                          currentPlan === 'free'
-                            ? 'bg-gray-100 font-bold text-gray-900'
-                            : 'hover:bg-gray-50 text-gray-600'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <User className="w-4 h-4 text-gray-500" />
-                          Grátis (TMB básico)
-                        </span>
-                        {currentPlan === 'free' && (
-                          <span className="w-2 h-2 rounded-full bg-gray-500" />
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          onPlanChange('beta');
-                          setPlanDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-xl flex items-center justify-between cursor-pointer ${
-                          currentPlan === 'beta'
-                            ? 'bg-amber-50 text-amber-900 font-bold'
-                            : 'hover:bg-amber-50/50 text-gray-600'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <Crown className="w-4 h-4 text-amber-600" />
-                          Beta (Macros & Progresso)
-                        </span>
-                        {currentPlan === 'beta' && (
-                          <span className="w-2 h-2 rounded-full bg-amber-500" />
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          onPlanChange('alfa');
-                          setPlanDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-xl flex items-center justify-between cursor-pointer ${
-                          currentPlan === 'alfa'
-                            ? 'bg-emerald-50 text-emerald-900 font-bold'
-                            : 'hover:bg-emerald-50/50 text-gray-600'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <Sparkles className="w-4 h-4 text-emerald-600" />
-                          Alfa (Cardápio + IA)
-                        </span>
-                        {currentPlan === 'alfa' && (
-                          <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
               {/* User Name Greeting */}
-              <div className="hidden lg:flex items-center gap-2 text-sm text-gray-700 font-medium border-l border-gray-200 pl-4">
-                <span className="text-gray-400">Olá,</span>
-                <span className="font-semibold text-gray-900">
+              <div className="hidden lg:flex items-center gap-2 text-sm text-gray-700 dark:text-slate-300 font-medium border-l border-gray-200 dark:border-slate-700 pl-4">
+                <span className="text-gray-400 dark:text-slate-500">Olá,</span>
+                <span className="font-semibold text-gray-900 dark:text-white">
                   {user.name.split(' ')[0]}
                 </span>
               </div>
@@ -242,7 +153,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={onLogout}
                 id="logout-btn"
-                className="p-2 rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                className="p-2 rounded-xl text-gray-500 dark:text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
                 title="Sair da Conta"
               >
                 <LogOut className="w-5 h-5" />

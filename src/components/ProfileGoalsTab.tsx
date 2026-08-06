@@ -45,9 +45,9 @@ export const ProfileGoalsTab: React.FC<ProfileGoalsTabProps> = ({
   const bmiInfo = calculateBMI(formData.currentWeight, formData.height);
   const weightDiff = (formData.currentWeight - formData.targetWeight).toFixed(1);
 
-  const handleProfileSubmit = (e: React.FormEvent) => {
+  const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onUpdateUser(formData);
+    await onUpdateUser(formData);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
 
@@ -170,6 +170,18 @@ export const ProfileGoalsTab: React.FC<ProfileGoalsTabProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
+                className="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
+                Foto de Perfil (URL)
+              </label>
+              <input
+                type="text"
+                value={formData.photoUrl || ''}
+                onChange={(e) => setFormData({ ...formData, photoUrl: e.target.value })}
                 className="w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
               />
             </div>

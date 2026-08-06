@@ -21,6 +21,7 @@ export interface UserProfile {
   plan: PlanType;
   formula: FormulaType;
   createdAt: string;
+  photoUrl?: string;
 }
 
 export interface WeightEntry {

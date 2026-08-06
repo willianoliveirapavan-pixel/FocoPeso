@@ -88,7 +88,13 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
 
           <div className="flex flex-wrap gap-3 mt-6">
             <button
-              onClick={() => onSelectTab('calculator')}
+              onClick={() => {
+                if (user.plan === 'free') {
+                  onOpenUpgradeModal();
+                } else {
+                  onSelectTab('calculator');
+                }
+              }}
               className="px-5 py-2.5 rounded-xl bg-white text-emerald-800 hover:bg-emerald-50 font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2"
             >
               <Calculator className="w-4 h-4 text-emerald-600" />
@@ -241,35 +247,21 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             </div>
           </div>
 
-          {/* Macro breakdown hint */}
-          <div className="mt-6 pt-4 border-t border-gray-100 dark:border-slate-800 flex items-center justify-between text-xs">
-            <span className="text-gray-500 dark:text-slate-400">
-              {user.plan === 'free'
-                ? '🔒 Divisão exata de Proteínas, Carboidratos e Gorduras requer Plano Pro.'
-                : '✅ Divisão de Macronutrientes liberada no seu plano.'}
-            </span>
-            <button
-              onClick={() => onSelectTab('calculator')}
-              className="font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 flex items-center gap-1 cursor-pointer"
-            >
-              Ver Detalhes <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
         </div>
 
         {/* Plan & Upgrade Card */}
-        <div className="p-6 rounded-3xl bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-lg flex flex-col justify-between">
+        <div className="p-6 rounded-3xl bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 text-gray-900 dark:text-white shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                 Seu Plano Atual
               </span>
-              <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                 {user.plan}
               </span>
             </div>
 
-            <h3 className="text-xl font-extrabold mb-2">
+            <h3 className="text-xl font-extrabold mb-2 text-gray-900 dark:text-white">
               {user.plan === 'free'
                 ? 'Plano Grátis Limitado'
                 : user.plan === 'beta'
@@ -277,7 +269,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
                 : 'Plano Alfa VIP'}
             </h3>
 
-            <p className="text-xs text-gray-300 leading-relaxed mb-6">
+            <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
               {user.plan === 'free'
                 ? 'Você tem acesso ao perfil e cálculo de TMB. Desbloqueie a divisão de macros e gráficos avançados.'
                 : user.plan === 'beta'

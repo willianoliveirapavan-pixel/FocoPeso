@@ -49,8 +49,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: <LayoutDashboard className="w-5 h-5" />,
     },
     {
+      id: 'diary',
+      label: 'Diário Alimentar',
+      icon: <BookOpen className="w-5 h-5" />,
+    },
+    {
       id: 'profile',
-      label: 'Meu Perfil & Metas',
+      label: 'Perfil & Metas',
       icon: <User className="w-5 h-5" />,
     },
     {
@@ -66,11 +71,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: <UtensilsCrossed className="w-5 h-5" />,
       locked: isFree || isPro,
       lockMsg: isFree ? 'Requer Pro / Premium' : 'Exclusivo Premium',
-    },
-    {
-      id: 'diary',
-      label: 'Diário Alimentar',
-      icon: <BookOpen className="w-5 h-5" />,
     },
     {
       id: 'pricing',
@@ -91,10 +91,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {menuItems.map((item) => {
               const isActive = activeTab === item.id;
               const handleClick = () => {
-                if (item.locked || item.id === 'pricing') {
+                if (item.locked) {
                   onOpenUpgradeModal();
+                } else {
+                  onSelectTab(item.id);
+                  if (item.id === 'pricing') {
+                    onOpenUpgradeModal();
+                  }
                 }
-                onSelectTab(item.id);
               };
 
               return (
@@ -186,30 +190,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      {/* Footer support note & Dark Mode Toggle */}
+      {/* Footer support note */}
       <div className="pt-4 border-t border-gray-100 dark:border-slate-800 text-[11px] text-gray-400 dark:text-slate-400 space-y-3">
-        {onToggleDarkMode && (
-          <button
-            onClick={onToggleDarkMode}
-            id="sidebar-theme-toggle-btn"
-            className="w-full py-2 px-3 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-200 font-medium text-xs flex items-center justify-between hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
-          >
-            <span className="flex items-center gap-2">
-              {darkMode ? (
-                <Sun className="w-4 h-4 text-amber-400" />
-              ) : (
-                <Moon className="w-4 h-4 text-slate-500 dark:text-slate-300" />
-              )}
-              {darkMode ? 'Tema Claro' : 'Tema Escuro'}
-            </span>
-            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase">
-              {darkMode ? 'Ativo' : 'Ativar'}
-            </span>
-          </button>
-        )}
         <div>
-          <p className="font-semibold text-gray-500 dark:text-slate-400 mb-0.5">FocoPeso v2.4</p>
-          <p>Desenvolvido com padrão SaaS científico para PT-BR.</p>
+          <p className="font-semibold text-gray-700 dark:text-slate-300 mb-0.5">FocoPeso.com</p>
         </div>
       </div>
     </aside>
