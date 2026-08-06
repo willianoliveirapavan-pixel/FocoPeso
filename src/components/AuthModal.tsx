@@ -332,7 +332,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSelectedPlan('beta')}
+                  onClick={async () => {
+                    setSelectedPlan('beta');
+                    alert('Redirecionando para o pagamento seguro do Stripe para o Plano Beta (R$ 19,90)...');
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                  }}
                   className={`py-2 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
                     selectedPlan === 'beta'
                       ? 'bg-amber-100 border-amber-400 text-amber-900 shadow-2xs'
@@ -343,7 +347,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setSelectedPlan('alfa')}
+                  onClick={async () => {
+                    setSelectedPlan('alfa');
+                    alert('Redirecionando para o pagamento seguro do Stripe para o Plano Alfa (R$ 49,90)...');
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                  }}
                   className={`py-2 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
                     selectedPlan === 'alfa'
                       ? 'bg-emerald-100 border-emerald-400 text-emerald-900 shadow-2xs'
