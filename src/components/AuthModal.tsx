@@ -120,18 +120,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       height: Number(height) || 175,
       activityLevel: Number(activityLevel) || 1.55,
       goal,
-      plan: selectedPlan,
+      plan: 'free',
       formula: 'mifflin',
       createdAt: new Date().toISOString(),
     };
 
     try {
-      if (selectedPlan !== 'free') {
-        alert('Redirecionando para o pagamento seguro do Stripe...');
-        // Simulate Stripe redirect and successful payment
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-      
       const newUser = await registerUserWithFirebase(profileData, password);
       saveUser(newUser);
       setLoggedIn(true);
@@ -313,55 +307,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
             </div>
 
-            {/* Plan selection preview */}
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Plano Selecionado
-              </label>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelectedPlan('free')}
-                  className={`py-2 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    selectedPlan === 'free'
-                      ? 'bg-gray-100 border-gray-400 text-gray-900 shadow-2xs'
-                      : 'bg-white border-gray-200 text-gray-500'
-                  }`}
-                >
-                  Grátis (R$0)
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    setSelectedPlan('beta');
-                    alert('Redirecionando para o pagamento seguro do Stripe para o Plano Beta (R$ 19,90)...');
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                  }}
-                  className={`py-2 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    selectedPlan === 'beta'
-                      ? 'bg-amber-100 border-amber-400 text-amber-900 shadow-2xs'
-                      : 'bg-white border-gray-200 text-gray-500'
-                  }`}
-                >
-                  Beta (R$19,90)
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    setSelectedPlan('alfa');
-                    alert('Redirecionando para o pagamento seguro do Stripe para o Plano Alfa (R$ 49,90)...');
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                  }}
-                  className={`py-2 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    selectedPlan === 'alfa'
-                      ? 'bg-emerald-100 border-emerald-400 text-emerald-900 shadow-2xs'
-                      : 'bg-white border-gray-200 text-gray-500'
-                  }`}
-                >
-                  Alfa (R$49,90)
-                </button>
-              </div>
-            </div>
+            {/* Plan selection removed, default is 'free' */}
 
             {/* Health & Body details */}
             <div className="pt-2 border-t border-gray-100 space-y-3">

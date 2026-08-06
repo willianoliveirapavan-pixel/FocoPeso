@@ -102,12 +102,6 @@ export const Header: React.FC<HeaderProps> = ({
               Recurso & TMB
             </a>
             <a
-              href="#precos"
-              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-            >
-              Planos e Preços
-            </a>
-            <a
               href="#depoimentos"
               className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
             >
@@ -211,13 +205,6 @@ export const Header: React.FC<HeaderProps> = ({
                 className="px-3 py-2 rounded-xl hover:bg-gray-50 text-sm font-medium text-gray-700"
               >
                 Recursos
-              </a>
-              <a
-                href="#precos"
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-xl hover:bg-gray-50 text-sm font-medium text-gray-700"
-              >
-                Planos e Preços
               </a>
               <div className="pt-2 flex flex-col gap-2">
                 <button

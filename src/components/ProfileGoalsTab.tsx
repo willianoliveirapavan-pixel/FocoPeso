@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   User,
   Scale,
@@ -41,6 +41,10 @@ export const ProfileGoalsTab: React.FC<ProfileGoalsTabProps> = ({
   const [newWeight, setNewWeight] = useState<string>('');
   const [newNote, setNewNote] = useState<string>('');
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    setFormData(user);
+  }, [user]);
 
   const bmiInfo = calculateBMI(formData.currentWeight, formData.height);
   const weightDiff = (formData.currentWeight - formData.targetWeight).toFixed(1);
