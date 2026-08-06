@@ -64,36 +64,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     try {
       const fbUser = await loginUserWithFirebase(loginEmail, loginPassword);
-      let userToLog: UserProfile;
 
       if (fbUser) {
-        userToLog = fbUser;
+        saveUser(fbUser);
+        setLoggedIn(true);
+        onSuccess(fbUser);
+        onClose();
       } else {
-        // Fallback for demo mode
-        userToLog = {
-          id: 'usr_' + Date.now().toString(),
-          name: loginEmail.split('@')[0] || 'Usuário Emagrecerei',
-          email: loginEmail,
-          password: loginPassword,
-          age: 28,
-          gender: 'masculino',
-          currentWeight: 80,
-          targetWeight: 75,
-          height: 175,
-          activityLevel: 1.55,
-          goal: 'lose',
-          plan: selectedPlan,
-          formula: 'mifflin',
-          createdAt: new Date().toISOString(),
-        };
+        setErrorMsg('E-mail ou senha incorretos.');
       }
-
-      saveUser(userToLog);
-      setLoggedIn(true);
-      onSuccess(userToLog);
-      onClose();
     } catch (err: any) {
-      setErrorMsg(err?.message || 'Erro ao realizar login no Firebase.');
+      if (err?.code === 'auth/user-not-found' || err?.code === 'auth/wrong-password' || err?.code === 'auth/invalid-credential') {
+        setErrorMsg('E-mail ou senha incorretos');
+      } else {
+        setErrorMsg(err?.message || 'Erro ao realizar login no Firebase.');
+      }
     } finally {
       setLoading(false);
     }
@@ -197,7 +182,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {errorMsg && (
-          <div className="mb-4 p-3 rounded-xl bg-red-50 text-red-700 text-xs font-semibold border border-red-200">
+          <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 text-xs font-semibold border border-red-200 dark:border-red-900">
             {errorMsg}
           </div>
         )}
@@ -262,25 +247,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           /* REGISTER FORM */
           <form onSubmit={handleRegisterSubmit} className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                 Nome Completo *
               </label>
               <div className="relative">
-                <User className="w-4 h-4 text-gray-400 absolute left-3.5 top-3" />
+                <User className="w-4 h-4 text-gray-400 dark:text-slate-500 absolute left-3.5 top-3" />
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ex: Willian Oliveira"
-                  className="w-full pl-10 pr-4 py-2 text-sm rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+                  className="w-full pl-10 pr-4 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   E-mail *
                 </label>
                 <input
@@ -289,11 +274,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="seuemail@exemplo.com"
-                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   Senha *
                 </label>
                 <input
@@ -302,49 +287,47 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                 />
               </div>
             </div>
 
-            {/* Plan selection removed, default is 'free' */}
-
             {/* Health & Body details */}
-            <div className="pt-2 border-t border-gray-100 space-y-3">
-              <p className="text-xs font-bold text-gray-800">
+            <div className="pt-2 border-t border-gray-100 dark:border-slate-800 space-y-3">
+              <p className="text-xs font-bold text-gray-800 dark:text-slate-200">
                 Dados Físicos & Objetivos
               </p>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                  <label className="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1">
                     Gênero
                   </label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value as Gender)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                   >
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
+                    <option value="masculino" className="bg-white dark:bg-slate-800 text-gray-900 dark:text-white">Masculino</option>
+                    <option value="feminino" className="bg-white dark:bg-slate-800 text-gray-900 dark:text-white">Feminino</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                  <label className="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1">
                     Idade (anos)
                   </label>
                   <input
                     type="number"
                     value={age}
                     onChange={(e) => setAge(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 focus:outline-hidden focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                  <label className="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1">
                     Peso (kg)
                   </label>
                   <input
@@ -352,11 +335,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     step="0.1"
                     value={currentWeight}
                     onChange={(e) => setCurrentWeight(Number(e.target.value))}
-                    className="w-full px-2 py-2 text-xs rounded-xl border border-gray-200"
+                    className="w-full px-2 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                  <label className="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1">
                     Meta (kg)
                   </label>
                   <input
@@ -364,33 +347,33 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     step="0.1"
                     value={targetWeight}
                     onChange={(e) => setTargetWeight(Number(e.target.value))}
-                    className="w-full px-2 py-2 text-xs rounded-xl border border-gray-200"
+                    className="w-full px-2 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                  <label className="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1">
                     Altura (cm)
                   </label>
                   <input
                     type="number"
                     value={height}
                     onChange={(e) => setHeight(Number(e.target.value))}
-                    className="w-full px-2 py-2 text-xs rounded-xl border border-gray-200"
+                    className="w-full px-2 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                <label className="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   Nível de Atividade Física
                 </label>
                 <select
                   value={activityLevel}
                   onChange={(e) => setActivityLevel(Number(e.target.value))}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 bg-white"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-hidden focus:border-emerald-500"
                 >
                   {ACTIVITY_LEVEL_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
+                    <option key={opt.value} value={opt.value} className="bg-white dark:bg-slate-800 text-gray-900 dark:text-white">
                       {opt.label} - {opt.desc}
                     </option>
                   ))}
@@ -398,17 +381,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-gray-600 mb-1">
+                <label className="block text-[11px] font-semibold text-gray-700 dark:text-slate-300 mb-1">
                   Objetivo Principal
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
                     onClick={() => setGoal('lose')}
-                    className={`py-2 rounded-xl text-xs font-semibold border ${
+                    className={`py-2 px-1 rounded-xl text-xs font-bold transition-colors border cursor-pointer ${
                       goal === 'lose'
-                        ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
-                        : 'bg-white border-gray-200 text-gray-600'
+                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-xs'
+                        : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-750'
                     }`}
                   >
                     Perder Peso
@@ -416,10 +399,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setGoal('maintain')}
-                    className={`py-2 rounded-xl text-xs font-semibold border ${
+                    className={`py-2 px-1 rounded-xl text-xs font-bold transition-colors border cursor-pointer ${
                       goal === 'maintain'
-                        ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
-                        : 'bg-white border-gray-200 text-gray-600'
+                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-xs'
+                        : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-750'
                     }`}
                   >
                     Manter Peso
@@ -427,10 +410,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setGoal('gain')}
-                    className={`py-2 rounded-xl text-xs font-semibold border ${
+                    className={`py-2 px-1 rounded-xl text-xs font-bold transition-colors border cursor-pointer ${
                       goal === 'gain'
-                        ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
-                        : 'bg-white border-gray-200 text-gray-600'
+                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-xs'
+                        : 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-750'
                     }`}
                   >
                     Ganhar Massa
@@ -448,7 +431,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Criando Conta no Firebase...</span>
+                  <span>Criando Conta...</span>
                 </>
               ) : (
                 <>

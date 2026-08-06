@@ -27,35 +27,25 @@ export async function registerUserWithFirebase(
   profileData: Omit<UserProfile, 'id'>,
   passwordText: string
 ): Promise<UserProfile> {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      profileData.email,
-      passwordText
-    );
-    const uid = userCredential.user.uid;
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    profileData.email,
+    passwordText
+  );
+  const uid = userCredential.user.uid;
 
-    const fullProfile: UserProfile = {
-      ...profileData,
-      id: uid,
-    };
+  const fullProfile: UserProfile = {
+    ...profileData,
+    id: uid,
+  };
 
-    // Salvar perfil no Firestore
-    await setDoc(doc(db, 'users', uid), {
-      ...fullProfile,
-      updatedAt: serverTimestamp(),
-    });
+  // Salvar perfil no Firestore
+  await setDoc(doc(db, 'users', uid), {
+    ...fullProfile,
+    updatedAt: serverTimestamp(),
+  });
 
-    return fullProfile;
-  } catch (error: any) {
-    console.warn('Firebase auth register error, falling back to local object:', error);
-    // If auth fails (e.g. duplicate or auth disabled), return populated user with fallback ID
-    const fallbackProfile: UserProfile = {
-      ...profileData,
-      id: 'usr_' + Date.now().toString(),
-    };
-    return fallbackProfile;
-  }
+  return fullProfile;
 }
 
 /**
@@ -80,32 +70,13 @@ export async function loginUserWithFirebase(
       if ((data.plan as any) === 'premium') data.plan = 'alfa';
       return data;
     } else {
-      // Criar documento se não existir
-      const defaultProfile: UserProfile = {
-        id: uid,
-        name: email.split('@')[0] || 'Usuário FocoPeso',
-        email,
-        password: '',
-        age: 28,
-        gender: 'masculino',
-        currentWeight: 80,
-        targetWeight: 75,
-        height: 175,
-        activityLevel: 1.55,
-        goal: 'lose',
-        plan: 'free',
-        formula: 'mifflin',
-        createdAt: new Date().toISOString(),
-      };
-      await setDoc(userDocRef, {
-        ...defaultProfile,
-        updatedAt: serverTimestamp(),
-      });
-      return defaultProfile;
+      // Perfil não encontrado no Firestore (usuário foi apagado)
+      await signOut(auth);
+      return null;
     }
   } catch (error: any) {
     console.warn('Firebase auth login error:', error);
-    return null;
+    throw error;
   }
 }
 

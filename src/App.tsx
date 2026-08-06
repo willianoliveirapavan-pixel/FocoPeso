@@ -57,6 +57,8 @@ export default function App() {
           setIsAuth(true);
         } else {
           // Handle case where user auth exists but profile is missing
+          await logoutFirebase();
+          clearStorage();
           setIsAuth(false);
           setUser(null);
         }
