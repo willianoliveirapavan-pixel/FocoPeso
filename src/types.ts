@@ -1,87 +1,59 @@
-export type PlanType = 'free' | 'beta' | 'alfa';
+export type MealType = 'cafe' | 'almoco' | 'jantar' | 'lanche';
 
-export type Gender = 'masculino' | 'feminino';
-
-export type Goal = 'lose' | 'maintain' | 'gain';
-
-export type FormulaType = 'mifflin' | 'harris';
-
-export interface UserProfile {
+export interface FoodItem {
   id: string;
   name: string;
-  email: string;
-  password?: string;
-  age: number;
-  gender: Gender;
-  currentWeight: number; // in kg
-  targetWeight: number;  // in kg
-  height: number;        // in cm
-  activityLevel: number; // multiplier e.g. 1.2, 1.375, etc.
-  goal: Goal;
-  plan: PlanType;
-  formula: FormulaType;
-  createdAt: string;
-  photoUrl?: string;
-}
-
-export interface WeightEntry {
-  id: string;
-  date: string;
-  weight: number;
-  note?: string;
-}
-
-export interface MacroBreakdown {
-  tmb: number;
-  tdee: number;
-  targetCalories: number;
+  portionGrams: number;
+  calories: number;
   proteinGrams: number;
   carbsGrams: number;
-  fatsGrams: number;
-  proteinPct: number;
-  carbsPct: number;
-  fatsPct: number;
-  deficitOrSurplus: number;
+  fatGrams: number;
 }
 
-export interface MealItem {
+export interface MealLog {
   id: string;
-  name: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  portion: string;
-  category: 'breakfast' | 'lunch' | 'snack' | 'dinner' | 'supper';
-}
-
-export interface MealCategoryPlan {
-  category: 'breakfast' | 'lunch' | 'snack' | 'dinner' | 'supper';
-  title: string;
-  timeRange: string;
-  items: MealItem[];
+  userId: string;
+  dishName: string;
+  mealType: MealType;
+  date: string; // ISO format YYYY-MM-DD
+  timestamp: number;
+  items: FoodItem[];
   totalCalories: number;
   totalProtein: number;
   totalCarbs: number;
   totalFat: number;
+  imageUrl?: string;
+  summaryTip?: string;
 }
 
-export interface FoodLogEntry {
-  id: string;
-  date: string;
-  time: string;
+export interface UserProfile {
+  uid: string;
   name: string;
-  category: 'breakfast' | 'lunch' | 'snack' | 'dinner' | 'supper';
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
+  email: string;
+  dailyCalorieGoal: number; // e.g. 2000
+  dailyProteinGoal: number; // e.g. 150g
+  dailyCarbsGoal: number;   // e.g. 220g
+  dailyFatGoal: number;     // e.g. 60g
+  currentWeight: number;    // kg
+  targetWeight: number;     // kg
+  height: number;           // cm
+  gender: 'masculino' | 'feminino';
+  activityLevel: number;    // multiplier
+  plan?: 'beta';
+  role?: 'user' | 'admin';
+  isPaid?: boolean;
 }
 
-export interface WaterLog {
-  date: string;
-  targetMl: number;
-  consumedMl: number;
+export interface AiFoodAnalysisResult {
+  dishName: string;
+  confidenceScore: number;
+  summaryTip: string;
+  items: Array<{
+    name: string;
+    portionGrams: number;
+    calories: number;
+    proteinGrams: number;
+    carbsGrams: number;
+    fatGrams: number;
+  }>;
 }
-
-export type TabType = 'overview' | 'profile' | 'calculator' | 'mealplan' | 'diary' | 'pricing';

@@ -1,240 +1,305 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React, { useState, useEffect } from 'react';
-import { UserProfile, PlanType, TabType } from './types';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase';
 import {
-  getUser,
-  saveUser,
-  isLoggedIn as checkLoggedIn,
-  setLoggedIn,
-  updateUserPlan,
-  clearStorage,
-} from './utils/storage';
-import { logoutFirebase, getUserProfileFromFirestore, saveUserProfileToFirestore } from './services/firebaseService';
-import { Header } from './components/Header';
-import { Sidebar } from './components/Sidebar';
-import { LandingPage } from './components/LandingPage';
-import { AuthModal } from './components/AuthModal';
-import { OverviewTab } from './components/OverviewTab';
-import { ProfileGoalsTab } from './components/ProfileGoalsTab';
-import { CalculatorTab } from './components/CalculatorTab';
-import { MealPlanTab } from './components/MealPlanTab';
-import { FoodDiaryTab } from './components/FoodDiaryTab';
-import { PricingTab } from './components/PricingTab';
-import { AiAssistantModal } from './components/AiAssistantModal';
-import { PlansModal } from './components/PlansModal';
+  UserProfile,
+  MealLog,
+  MealType,
+  AiFoodAnalysisResult,
+} from './types';
+import {
+  getLocalProfile,
+  updateUserProfile,
+  addMealLog,
+  deleteMealLog,
+  subscribeMealsByDate,
+  subscribeAllMeals,
+} from './services/storageService';
+import { subscribeAuthState, logoutUser } from './services/authService';
+import { Header } from './components/layout/Header';
+import { Dashboard } from './components/dashboard/Dashboard';
+import { ReportsView } from './components/history/ReportsView';
+import { BottomNav } from './components/layout/BottomNav';
+import { CameraModal } from './components/modals/CameraModal';
+import { FoodConfirmationModal } from './components/modals/FoodConfirmationModal';
+import { ManualAddModal } from './components/modals/ManualAddModal';
+import { ProfileModal } from './components/modals/ProfileModal';
+import { PlatformInfoModal } from './components/modals/PlatformInfoModal';
+import { AdminModal } from './components/modals/AdminModal';
+import { LoginView } from './components/auth/LoginView';
+import { SubscriptionPaywallModal } from './components/auth/SubscriptionPaywallModal';
+import { Utensils } from 'lucide-react';
 
-export default function App() {
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<TabType>('overview');
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
-    return localStorage.getItem('focopeso_dark_mode') === 'true';
-  });
+export function App() {
+  const [user, setUser] = useState<UserProfile>(getLocalProfile());
+  const [authLoading, setAuthLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Modals
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
-  const [authDefaultPlan, setAuthDefaultPlan] = useState<PlanType>('free');
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().split('T')[0]
+  );
+  const [meals, setMeals] = useState<MealLog[]>([]);
+  const [allMeals, setAllMeals] = useState<MealLog[]>([]);
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'history' | 'profile'>(
+    'dashboard'
+  );
 
-  const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
-  const [plansModalOpen, setPlansModalOpen] = useState(false);
+  // Modals state
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isManualOpen, setIsManualOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isPlatformInfoOpen, setIsPlatformInfoOpen] = useState(false);
+  const [platformInfoTab, setPlatformInfoTab] = useState<'planos' | 'funcionalidades' | 'ferramentas' | 'privacidade'>('planos');
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
 
-  // Initialize auth state
+  // Analysis result passing
+  const [aiResult, setAiResult] = useState<AiFoodAnalysisResult | null>(null);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+
+  // Initialize Auth listener
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        // User is logged in, load profile
-        const profile = await getUserProfileFromFirestore(firebaseUser.uid);
-        if (profile) {
-          setUser(profile);
-          saveUser(profile);
-          setIsAuth(true);
-        } else {
-          // Handle case where user auth exists but profile is missing
-          await logoutFirebase();
-          clearStorage();
-          setIsAuth(false);
-          setUser(null);
-        }
+    const unsubscribeAuth = subscribeAuthState((profile, rawUser) => {
+      if (profile && rawUser) {
+        setUser(profile);
+        setIsAuthenticated(true);
       } else {
-        // User is logged out
-        clearStorage();
-        setIsAuth(false);
-        setUser(null);
+        setIsAuthenticated(false);
       }
+      setAuthLoading(false);
     });
-
-    return unsubscribe;
+    return () => unsubscribeAuth();
   }, []);
 
+  // Check for successful payment return parameter from Stripe
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('focopeso_dark_mode', darkMode ? 'true' : 'false');
-  }, [darkMode]);
-
-  useEffect(() => {
-    if (isAuth && user) {
-      getUserProfileFromFirestore(user.id).then((updatedUser) => {
-        if (updatedUser) {
-          setUser(updatedUser);
-          saveUser(updatedUser);
-        }
+    if (!isAuthenticated || !user) return;
+    
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('paid') === 'true' || params.get('payment_success') === 'true') {
+      const updatedUser: UserProfile = {
+        ...user,
+        isPaid: true,
+        plan: 'beta',
+      };
+      setUser(updatedUser);
+      updateUserProfile(updatedUser).then(() => {
+        // Clean up URL query parameters to look clean
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
       });
     }
-  }, [activeTab]);
+  }, [isAuthenticated, user]);
 
+  // Subscribe to all meals for history view when authenticated
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const unsubscribeAll = subscribeAllMeals((userAllMeals) => {
+      setAllMeals(userAllMeals);
+    });
+    return () => unsubscribeAll();
+  }, [isAuthenticated]);
 
+  // Subscribe to meals on selected date when authenticated
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const unsubscribeMeals = subscribeMealsByDate(selectedDate, (dateMeals) => {
+      setMeals(dateMeals);
+    });
+    return () => unsubscribeMeals();
+  }, [selectedDate, isAuthenticated]);
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  };
-
-  const handleOpenAuth = (mode: 'login' | 'register', defaultPlan: PlanType = 'free') => {
-    setAuthMode(mode);
-    setAuthDefaultPlan(defaultPlan);
-    setAuthModalOpen(true);
-  };
-
-  const handleAuthSuccess = (loggedUser: UserProfile) => {
-    setUser(loggedUser);
-    setIsAuth(true);
-    setActiveTab('overview');
-  };
-
-  const handleLogout = () => {
-    logoutFirebase();
-    clearStorage();
-    setIsAuth(false);
-    setUser(null);
-  };
-
-  const handleUpdateUser = async (updatedUser: UserProfile) => {
-    setUser(updatedUser);
-    saveUser(updatedUser);
-    await saveUserProfileToFirestore(updatedUser);
-  };
-
-  // Plan Switcher (simulates plan changes live for testing locked/unlocked features)
-  const handlePlanChange = (newPlan: PlanType) => {
-    const updated = updateUserPlan(newPlan);
+  // Handlers
+  const handleSaveProfile = async (updated: UserProfile) => {
     setUser(updated);
-    setActiveTab('overview');
+    await updateUserProfile(updated);
   };
 
-  const handleOpenPlansModal = () => {
-    setPlansModalOpen(true);
+  const handleLogout = async () => {
+    await logoutUser();
+    setIsAuthenticated(false);
+    setIsProfileOpen(false);
   };
+
+  const handleAnalysisComplete = (
+    result: AiFoodAnalysisResult,
+    imageBase64: string
+  ) => {
+    setAiResult(result);
+    setCapturedImage(imageBase64);
+    setIsCameraOpen(false);
+    setIsConfirmationOpen(true);
+  };
+
+  const handleSaveMeal = async (newMeal: MealLog) => {
+    await addMealLog(newMeal);
+  };
+
+  const handleDeleteMeal = async (mealId: string) => {
+    await deleteMealLog(mealId);
+  };
+
+  const handleConfirmPayment = async () => {
+    const updatedUser: UserProfile = {
+      ...user,
+      isPaid: true,
+      plan: 'beta',
+    };
+    setUser(updatedUser);
+    await updateUserProfile(updatedUser);
+  };
+
+  // Loading screen during initial auth verification
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-4">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 animate-pulse">
+            <Utensils className="w-8 h-8" />
+          </div>
+          <h1 className="text-lg font-bold text-white">FocoPeso</h1>
+          <div className="w-6 h-6 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mx-auto" />
+        </div>
+      </div>
+    );
+  }
+
+  // Gate app behind login screen
+  if (!isAuthenticated) {
+    return <LoginView />;
+  }
+
+  // Gate app behind mandatory plan subscription payment
+  const isUserPaid = user.isPaid || user.email.toLowerCase().trim() === 'willianoliveirapavan@gmail.com' || user.role === 'admin';
+  if (!isUserPaid) {
+    return (
+      <SubscriptionPaywallModal
+        user={user}
+        onConfirmPayment={handleConfirmPayment}
+        onLogout={handleLogout}
+      />
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50/50 dark:bg-slate-950 flex flex-col font-sans text-gray-800 dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white transition-colors">
-      {/* Top Header */}
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+      {/* Off-Canvas Header */}
       <Header
         user={user}
-        isLoggedIn={isAuth}
-        onOpenAuth={handleOpenAuth}
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+        onOpenScan={() => setIsCameraOpen(true)}
+        onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenPlatformInfo={(tab) => {
+          if (tab) setPlatformInfoTab(tab);
+          setIsPlatformInfoOpen(true);
+        }}
+        onOpenAdmin={() => setIsAdminOpen(true)}
         onLogout={handleLogout}
-        onSelectTab={setActiveTab}
-        activeTab={activeTab}
-        onPlanChange={handlePlanChange}
-        onOpenPlansModal={handleOpenPlansModal}
-        darkMode={darkMode}
-        onToggleDarkMode={toggleDarkMode}
       />
 
-      {/* Main Body Layout */}
-      {!isAuth ? (
-        <LandingPage onOpenAuth={handleOpenAuth} />
-      ) : (
-        <div className="max-w-7xl w-full mx-auto flex-1 flex flex-col lg:flex-row">
-          {/* Dashboard Sidebar */}
-          <Sidebar
-            activeTab={activeTab}
-            onSelectTab={setActiveTab}
-            userPlan={user?.plan || 'free'}
-            onOpenUpgradeModal={handleOpenPlansModal}
-            darkMode={darkMode}
-            onToggleDarkMode={toggleDarkMode}
+      {/* Main Container */}
+      <main className="flex-1 max-w-7xl mx-auto w-full p-4 md:p-6 lg:p-8">
+        {activeTab === 'dashboard' && (
+          <Dashboard
+            user={user}
+            meals={meals}
+            onOpenScan={() => setIsCameraOpen(true)}
+            onOpenManual={() => setIsManualOpen(true)}
+            onDeleteMeal={handleDeleteMeal}
           />
+        )}
 
-          {/* Main Dashboard Content View */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-            {user && activeTab === 'overview' && (
-              <OverviewTab
-                user={user}
-                onSelectTab={setActiveTab}
-                onOpenUpgradeModal={handleOpenPlansModal}
-              />
-            )}
+        {activeTab === 'history' && (
+          <ReportsView
+            user={user}
+            allMeals={allMeals}
+            onSelectDate={(d) => {
+              setSelectedDate(d);
+              setActiveTab('dashboard');
+            }}
+            onDeleteMeal={handleDeleteMeal}
+            onOpenScan={() => setIsCameraOpen(true)}
+          />
+        )}
 
-            {user && activeTab === 'profile' && (
-              <ProfileGoalsTab user={user} onUpdateUser={handleUpdateUser} />
-            )}
+        {activeTab === 'profile' && (
+          <div className="pt-2">
+            <ProfileModal
+              isOpen={true}
+              onClose={() => setActiveTab('dashboard')}
+              user={user}
+              onSaveProfile={handleSaveProfile}
+            />
+          </div>
+        )}
+      </main>
 
-            {user && activeTab === 'calculator' && (
-              <CalculatorTab
-                user={user}
-                onUpdateUser={handleUpdateUser}
-                onOpenUpgradeModal={handleOpenPlansModal}
-              />
-            )}
-
-            {user && activeTab === 'mealplan' && (
-              <MealPlanTab
-                user={user}
-                onOpenUpgradeModal={handleOpenPlansModal}
-                onOpenAiAssistant={() => setAiAssistantOpen(true)}
-              />
-            )}
-
-            {user && activeTab === 'diary' && <FoodDiaryTab user={user} />}
-
-            {user && activeTab === 'pricing' && (
-              <PricingTab user={user} onUpdatePlan={handlePlanChange} />
-            )}
-          </main>
-        </div>
-      )}
-
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={authModalOpen}
-        mode={authMode}
-        defaultPlan={authDefaultPlan}
-        onClose={() => setAuthModalOpen(false)}
-        onSuccess={handleAuthSuccess}
+      {/* Mobile Bottom Navigation Bar */}
+      <BottomNav
+        activeTab={activeTab}
+        onTabChange={(tab) => {
+          if (tab === 'profile') {
+            setIsProfileOpen(true);
+          } else {
+            setActiveTab(tab);
+          }
+        }}
+        onOpenScan={() => setIsCameraOpen(true)}
       />
 
-      {/* Plans Modal */}
-      {user && (
-        <PlansModal
-          isOpen={plansModalOpen}
-          user={user}
-          onClose={() => {
-            setPlansModalOpen(false);
-            setActiveTab('overview');
-          }}
-          onUpdatePlan={handlePlanChange}
-        />
-      )}
+      {/* AI Camera Modal */}
+      <CameraModal
+        isOpen={isCameraOpen}
+        onClose={() => setIsCameraOpen(false)}
+        onAnalysisComplete={handleAnalysisComplete}
+      />
 
-      {/* AI Assistant Drawer Modal */}
-      {user && (
-        <AiAssistantModal
-          isOpen={aiAssistantOpen}
-          user={user}
-          onClose={() => setAiAssistantOpen(false)}
-        />
-      )}
+      {/* AI Food Confirmation & Editing Modal (Step 3) */}
+      <FoodConfirmationModal
+        isOpen={isConfirmationOpen}
+        onClose={() => setIsConfirmationOpen(false)}
+        analysisResult={aiResult}
+        selectedImage={capturedImage}
+        selectedDate={selectedDate}
+        onSaveMeal={handleSaveMeal}
+      />
+
+      {/* Manual Food Add Modal */}
+      <ManualAddModal
+        isOpen={isManualOpen}
+        onClose={() => setIsManualOpen(false)}
+        selectedDate={selectedDate}
+        onSaveMeal={handleSaveMeal}
+      />
+
+      {/* Profile & Goals Modal */}
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        user={user}
+        onSaveProfile={handleSaveProfile}
+      />
+
+      {/* Platform Info & Subscriptions Modal */}
+      <PlatformInfoModal
+        isOpen={isPlatformInfoOpen}
+        onClose={() => setIsPlatformInfoOpen(false)}
+        user={user}
+        initialTab={platformInfoTab}
+        onUpgradeToBeta={async () => {
+          const updated: UserProfile = { ...user, plan: 'beta' };
+          setUser(updated);
+          await updateUserProfile(updated);
+        }}
+      />
+
+      {/* Exclusive Admin Panel Modal */}
+      <AdminModal
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        user={user}
+      />
     </div>
   );
 }
+
+export default App;

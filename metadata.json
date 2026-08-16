@@ -1,6 +1,10 @@
 {
   "name": "FocoPeso",
-  "description": "Aplicação de saúde e fitness FocoPeso com gerenciamento de perfil, TMB, macros e integração Firebase.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "description": "Aplicativo de saúde e dieta com scanner de refeições por IA, análise de macronutrientes e diário nutricional completo.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

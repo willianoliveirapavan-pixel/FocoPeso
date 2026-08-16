@@ -25,6 +25,21 @@
         "notes": { "type": "string" }
       }
     },
+    "meals": {
+      "description": "Diário de refeições salvas do usuário",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "dishName": { "type": "string" },
+        "mealType": { "type": "string" },
+        "date": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "totalCalories": { "type": "number" },
+        "totalProtein": { "type": "number" },
+        "totalCarbs": { "type": "number" },
+        "totalFat": { "type": "number" }
+      }
+    },
     "foodLogs": {
       "description": "Diário alimentar do usuário",
       "properties": {
