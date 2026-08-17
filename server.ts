@@ -39,25 +39,41 @@ async function generateContentWithFallback(ai: GoogleGenAI, params: Omit<Paramet
   let lastError: any = null;
 
   for (const model of models) {
-    for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const response = await ai.models.generateContent({
+        ...params,
+        model,
+      });
+      return response;
+    } catch (err: any) {
+      lastError = err;
+      const errStr = String(err?.message || err);
+      const isOverloadedOrUnavailable = 
+        errStr.includes("503") || 
+        errStr.includes("UNAVAILABLE") || 
+        errStr.includes("high demand") || 
+        errStr.includes("overloaded") ||
+        errStr.includes("ResourceExhausted") ||
+        errStr.includes("429");
+      
+      console.warn(`Gemini model '${model}' failed. Error:`, errStr);
+      
+      if (isOverloadedOrUnavailable) {
+        console.warn(`Model '${model}' is overloaded or unavailable. Switching to the next available fallback model immediately...`);
+        continue; // Try the next model immediately
+      }
+      
+      // For any other error, try a quick 1-time retry for safety before moving to the next model
       try {
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const response = await ai.models.generateContent({
           ...params,
           model,
         });
         return response;
-      } catch (err: any) {
-        lastError = err;
-        const errStr = String(err?.message || err);
-        const is503 = errStr.includes("503") || errStr.includes("UNAVAILABLE") || errStr.includes("high demand");
-        
-        if (is503 && attempt === 0) {
-          // Short delay before retrying the same model for transient demand spikes
-          await new Promise((resolve) => setTimeout(resolve, 600));
-          continue;
-        }
-        console.warn(`Gemini model '${model}' (attempt ${attempt + 1}) failed. Error:`, errStr);
-        break;
+      } catch (retryErr: any) {
+        lastError = retryErr;
+        console.warn(`Gemini model '${model}' retry failed as well.`);
       }
     }
   }
