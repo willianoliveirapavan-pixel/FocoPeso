@@ -34,7 +34,9 @@ export function getFriendlyAuthErrorMessage(errorCode: string): string {
     case 'auth/network-request-failed':
       return 'Falha na conexão de rede. Verifique sua internet.';
     default:
-      return 'Ocorreu um erro ao realizar o acesso. Tente novamente.';
+      return errorCode 
+        ? `Ocorreu um erro ao realizar o acesso (${errorCode}). Tente novamente.`
+        : 'Ocorreu um erro ao realizar o acesso. Tente novamente.';
   }
 }
 
@@ -59,6 +61,8 @@ export function subscribeAuthState(
           profile.role = 'admin';
           profile.plan = 'beta';
           profile.isPaid = true;
+          // Persist the admin role change to the Firestore database
+          await setDoc(userDocRef, { role: 'admin', plan: 'beta', isPaid: true }, { merge: true });
         } else {
           profile.isPaid = profile.isPaid ?? false;
         }

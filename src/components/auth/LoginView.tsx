@@ -22,6 +22,7 @@ import {
   registerWithEmail,
   sendPasswordReset,
   getFriendlyAuthErrorMessage,
+  loginWithGoogle,
 } from '../../services/authService';
 
 export const LoginView: React.FC = () => {
@@ -38,6 +39,21 @@ export const LoginView: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  const handleGoogleLogin = async () => {
+    setErrorMsg(null);
+    setSuccessMsg(null);
+    setLoading(true);
+    try {
+      await loginWithGoogle();
+    } catch (err: any) {
+      console.error('Google auth error:', err);
+      const code = err?.code || '';
+      setErrorMsg(getFriendlyAuthErrorMessage(code));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
