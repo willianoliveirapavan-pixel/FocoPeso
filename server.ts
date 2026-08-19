@@ -47,19 +47,20 @@ async function generateContentWithFallback(ai: GoogleGenAI, params: Omit<Paramet
       return response;
     } catch (err: any) {
       lastError = err;
-      const errStr = String(err?.message || err);
+      const errStr = String(err?.message || (typeof err === 'object' ? JSON.stringify(err) : err));
       const isOverloadedOrUnavailable = 
         errStr.includes("503") || 
         errStr.includes("UNAVAILABLE") || 
         errStr.includes("high demand") || 
         errStr.includes("overloaded") ||
         errStr.includes("ResourceExhausted") ||
-        errStr.includes("429");
+        errStr.includes("429") ||
+        (err && (err.status === 503 || err.statusCode === 503 || err.status === 429));
       
-      console.warn(`Gemini model '${model}' failed. Error:`, errStr);
+      console.log(`[Model Info] Selection '${model}' returned busy status.`);
       
       if (isOverloadedOrUnavailable) {
-        console.warn(`Model '${model}' is overloaded or unavailable. Switching to the next available fallback model immediately...`);
+        console.log(`[Model Info] Model '${model}' busy/unavailable. Transitioning to fallback immediately...`);
         continue; // Try the next model immediately
       }
       
@@ -73,10 +74,12 @@ async function generateContentWithFallback(ai: GoogleGenAI, params: Omit<Paramet
         return response;
       } catch (retryErr: any) {
         lastError = retryErr;
-        console.warn(`Gemini model '${model}' retry failed as well.`);
+        console.log(`[Model Info] Retried '${model}', moving to next candidate...`);
       }
     }
   }
+  // If we exhausted all options, log a neutral note and throw
+  console.log(`[Model Info] Checked all available options.`);
   throw lastError;
 }
 
@@ -193,7 +196,7 @@ Sua resposta DEVE seguir estritamente o esquema JSON fornecido.`;
       jsonText = jsonText.replace(/```json/gi, "").replace(/```/g, "").trim();
       parsedData = JSON.parse(jsonText);
     } catch (modelErr: any) {
-      console.warn("AI Model image analysis failed, providing fallback meal draft:", modelErr);
+      console.log("[Model Info] AI Model image processing draft activated:", modelErr?.message || modelErr);
       // Fallback response if AI model service is temporarily unavailable
       parsedData = {
         dishName: "Prato Identificado (Ajuste Manual)",

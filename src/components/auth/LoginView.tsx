@@ -22,7 +22,6 @@ import {
   registerWithEmail,
   sendPasswordReset,
   getFriendlyAuthErrorMessage,
-  loginWithGoogle,
 } from '../../services/authService';
 
 export const LoginView: React.FC = () => {
@@ -39,21 +38,6 @@ export const LoginView: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
-
-  const handleGoogleLogin = async () => {
-    setErrorMsg(null);
-    setSuccessMsg(null);
-    setLoading(true);
-    try {
-      await loginWithGoogle();
-    } catch (err: any) {
-      console.error('Google auth error:', err);
-      const code = err?.code || '';
-      setErrorMsg(getFriendlyAuthErrorMessage(code));
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -251,9 +235,24 @@ export const LoginView: React.FC = () => {
 
           {/* Feedback Alerts */}
           {errorMsg && (
-            <div className="mb-5 p-4 rounded-2xl bg-rose-950/30 border border-rose-900/50 text-rose-300 text-xs flex items-start gap-2.5 animate-in fade-in slide-in-from-top-1 duration-200">
-              <AlertCircle className="w-4.5 h-4.5 text-rose-400 shrink-0 mt-0.5" />
-              <div className="leading-relaxed font-medium">{errorMsg}</div>
+            <div className="mb-5 p-4 rounded-2xl bg-rose-950/30 border border-rose-900/50 text-rose-300 text-xs flex flex-col gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
+              <div className="flex items-start gap-2.5">
+                <AlertCircle className="w-4.5 h-4.5 text-rose-400 shrink-0 mt-0.5" />
+                <div className="leading-relaxed font-medium">{errorMsg}</div>
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('forgot');
+                    setErrorMsg(null);
+                  }}
+                  className="text-[11px] font-bold text-emerald-400 hover:underline cursor-pointer flex items-center gap-1"
+                >
+                  <KeyRound className="w-3 h-3" />
+                  <span>Redefinir Senha por E-mail</span>
+                </button>
+              </div>
             </div>
           )}
 

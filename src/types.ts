@@ -42,6 +42,7 @@ export interface UserProfile {
   plan?: 'beta';
   role?: 'user' | 'admin';
   isPaid?: boolean;
+  updatedAt?: number;
 }
 
 export interface AiFoodAnalysisResult {
